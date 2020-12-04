@@ -8,18 +8,20 @@ import java.util.ArrayList;
 
 @Service
 public class NewsServiceManager implements NewsService {
+
+
     @Override
-    public ArrayList<Post> getAllNews() {
+    public ArrayList<Post> getAllPost() {
         return null;
     }
 
     @Override
-    public void addNews(Post post) {
+    public void addPost(Post post) {
 
     }
 
     @Override
-    public void removeNews(int Id) {
+    public void removePost(int Id) {
 
     }
 

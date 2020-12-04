@@ -15,19 +15,19 @@ public class NewsController {
 
     @GetMapping("/posts")
     ArrayList<Post> GetPosts() {
-        return service.getAllNews();
+        return service.getAllPost();
     }
 
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
     void CreatePost(@RequestBody Post post) {
-        service.addNews(post);
+        service.addPost(post);
     }
 
     @DeleteMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
     void DeletePostById(@RequestParam int Id) {
-        service.removeNews(Id);
+        service.removePost(Id);
     }
 
     @PostMapping("/posts/comment")

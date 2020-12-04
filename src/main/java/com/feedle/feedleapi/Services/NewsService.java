@@ -6,11 +6,11 @@ import com.feedle.feedleapi.Models.Post;
 import java.util.ArrayList;
 
 public interface NewsService {
-    ArrayList<Post> getAllNews();
+    ArrayList<Post> getAllPost();
 
-    void addNews(Post post);
+    void addPost(Post post);
 
-    void removeNews(int Id);
+    void removePost(int Id);
 
     void updatePost(Post post);
 

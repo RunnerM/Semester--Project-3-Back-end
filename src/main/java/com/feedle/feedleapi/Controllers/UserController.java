@@ -44,10 +44,11 @@ public class UserController {
         service.updateUser(Id, user);
 
     }
-    private User seedAuthorazition(String username, String password){
+    private User seedAuthorazition(String username, String password) {
         ArrayList<Post> posts = new ArrayList<>();
         ArrayList<UserConversation> conv = new ArrayList<>();
         User user1 = new User();
+        /*
         user1.setUsername("Nicolai");
         user1.setPassword("123abc");
         user1.setSecurityLevel("admin");
@@ -72,6 +73,8 @@ public class UserController {
         }
         return Default;
 
+         */
+
 //        users.add(user1);
 //        users.add(user2);
 //        User u2= new User();
@@ -87,8 +90,7 @@ public class UserController {
 //            }
 //        }
 //        return u2;
-
-
+          return null;
     }
 
 

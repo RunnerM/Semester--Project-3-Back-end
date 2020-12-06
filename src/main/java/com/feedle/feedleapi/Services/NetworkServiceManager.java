@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 @Service
 public class NetworkServiceManager implements NetworkService {
 
     private Socket socket;
-    private BufferedReader in;
+    private DataInputStream in;
     private DataOutputStream out;
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -24,7 +25,7 @@ public class NetworkServiceManager implements NetworkService {
 
     public NetworkServiceManager() throws Exception {
         this.socket = new Socket(HOST, PORT);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
     }
 
@@ -37,7 +38,8 @@ public class NetworkServiceManager implements NetworkService {
     public void addUser(User user) {
         try {
             //out.write(mapper.writeValueAsString(user));
-            in.readLine();
+            byte[] response = in.readAllBytes();
+            String s = new String (response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +52,8 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = message.getBytes();
             out.write(messageInBytes);
             System.out.println("here");
-            String s = in.readLine();
+            byte[] response = in.readAllBytes();
+            String s = new String (response);
             System.out.println(s);
 
         } catch (Exception e) {

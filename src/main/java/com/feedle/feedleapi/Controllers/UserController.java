@@ -20,9 +20,10 @@ public class UserController {
 
 
     @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
     User authorizeUser() {
         ArrayList<User> users = service.getUser();
-            return new User();
+        return new User();
     }
 
     @PostMapping("/user")

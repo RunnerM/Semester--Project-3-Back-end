@@ -5,16 +5,16 @@ import lombok.Data;
 import java.util.ArrayList;
 @Data
 public class Post {
-    public int Id ;
-    public String Title ;
-    public String Context ;
-    public String AuthorUserName ;
-    public int Day ;
-    public int Month ;
-    public int Year ;
-    public int Hour ;
-    public int Minute ;
-    public int Second ;
+    public int id ;
+    public String title ;
+    public String context ;
+    public String authorUserName ;
+    public int day ;
+    public int month ;
+    public int year ;
+    public int hour ;
+    public int minute ;
+    public int second ;
     //public byte[] images;
-    public ArrayList<Comment> Comments ;
+    public ArrayList<Comment> comments ;
 }

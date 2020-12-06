@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class Message {
-    public int Id;
-    public String Content;
-    public int AuthorId;
-    public int Day;
-    public int Month;
-    public int Year;
-    public int Hour;
-    public int Minute;
-    public int Second;
+    public int id;
+    public String content;
+    public int authorId;
+    public int day;
+    public int month;
+    public int year;
+    public int hour;
+    public int minute;
+    public int second;
 }

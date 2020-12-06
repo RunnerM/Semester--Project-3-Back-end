@@ -3,7 +3,7 @@ package com.feedle.feedleapi.Networking;
 import com.feedle.feedleapi.Models.Post;
 
 public class AddPostRequest extends Request{
-    Post post;
+    private Post post;
 
     public AddPostRequest(Post post)
     {

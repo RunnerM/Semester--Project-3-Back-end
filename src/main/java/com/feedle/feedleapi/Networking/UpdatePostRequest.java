@@ -6,7 +6,7 @@ public class UpdatePostRequest extends Request{
     private Post post;
     public UpdatePostRequest(Post post)
     {
-        super(RequestType.UpdateUser);
+        super(RequestType.UpdatePost);
         this.post = post;
     }
 

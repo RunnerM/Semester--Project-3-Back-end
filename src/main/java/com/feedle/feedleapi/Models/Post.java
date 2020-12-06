@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Post {
     public int id ;
     public String title ;
-    public String context ;
+    public String content ;
     public String authorUserName ;
     public int day ;
     public int month ;

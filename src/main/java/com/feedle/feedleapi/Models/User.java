@@ -12,7 +12,5 @@ public class User implements Serializable {
     public String displayedUsername;
     public ArrayList<Post> userPosts;
     public ArrayList<UserConversation> userConversations;
-    public String securityLevel;
-    //fields renamed on purpuse because
-    // if they start with capital they get duplicated in API response.
+    public int securityLevel;
 }

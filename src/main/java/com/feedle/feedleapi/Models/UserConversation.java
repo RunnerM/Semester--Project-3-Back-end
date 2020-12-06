@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserConversation {
-    public int id;
+    public int userid;
     public int conversationId;
     public User user;
     public Conversation conversation;

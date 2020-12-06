@@ -7,9 +7,7 @@ import com.feedle.feedleapi.Models.User;
 import com.feedle.feedleapi.Services.NetworkService;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -17,10 +15,8 @@ import java.util.ArrayList;
 public class NetworkServiceManager implements NetworkService {
 
     private Socket socket;
-    private int port = 0;
-    private String host = "";
     private BufferedReader in;
-    private PrintWriter out;
+    private DataOutputStream out;
     private ObjectMapper mapper = new ObjectMapper();
 
     private static int PORT = 5000;
@@ -29,16 +25,7 @@ public class NetworkServiceManager implements NetworkService {
     public NetworkServiceManager() throws Exception {
         this.socket = new Socket(HOST, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-    }
-
-    public void setUpSocketConnection(int port, String host) throws Exception {
-        this.port = port;
-        this.host = host;
-        this.socket = new Socket(host, port);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-
+        out = new DataOutputStream(socket.getOutputStream());
     }
 
     @Override
@@ -49,17 +36,26 @@ public class NetworkServiceManager implements NetworkService {
     @Override
     public void addUser(User user) {
         try {
-            out.write(mapper.writeValueAsString(user));
+            //out.write(mapper.writeValueAsString(user));
             in.readLine();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public ArrayList<User> getAllUser() {
+        try {
+            String message = "hello";
+            byte[] messageInBytes = message.getBytes();
+            out.write(messageInBytes);
+            System.out.println("here");
+            String s = in.readLine();
+            System.out.println(s);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

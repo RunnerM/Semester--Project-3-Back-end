@@ -10,8 +10,6 @@ public interface NetworkService {
 
     void addUser(User user);
 
-    void setUpSocketConnection(int port, String host) throws Exception;
-
     ArrayList<User> getAllUser();
 
     ArrayList<Post> getAllPost();

@@ -5,31 +5,29 @@ import com.feedle.feedleapi.Models.User;
 import com.feedle.feedleapi.Models.UserConversation;
 import com.feedle.feedleapi.Services.UserService;
 import com.feedle.feedleapi.Services.UserServiceManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/feedle")// localhost:port/feedle
 public class UserController {
-    UserService service = new UserServiceManager();
+    @Autowired
+    private UserService service;
 
 
     @GetMapping("/user")
-    @ResponseStatus(HttpStatus.OK)
-    User authorizeUser(@RequestParam String username, @RequestParam String password) {
-        System.out.println(username);
-        System.out.println(password);
-        User user = seedAuthorazition(username,password);
-            return user;
+    User authorizeUser() {
+        ArrayList<User> users = service.getUser();
+            return new User();
     }
 
     @PostMapping("/user")
     void registerUser(@RequestBody User user) {
         service.registerUser(user);
-
     }
 
     @DeleteMapping("/user")
@@ -44,6 +42,7 @@ public class UserController {
         service.updateUser(Id, user);
 
     }
+    /*
     private User seedAuthorazition(String username, String password) {
         ArrayList<Post> posts = new ArrayList<>();
         ArrayList<UserConversation> conv = new ArrayList<>();
@@ -73,6 +72,7 @@ public class UserController {
         }
         return Default;
 
+     */
 
 
 //        users.add(user1);
@@ -90,8 +90,6 @@ public class UserController {
 //            }
 //        }
 //        return u2;
-          //return null;
-    }
-
+    //return null;
 
 }

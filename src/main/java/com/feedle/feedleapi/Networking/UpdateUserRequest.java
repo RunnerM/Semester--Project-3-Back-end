@@ -2,11 +2,11 @@ package com.feedle.feedleapi.Networking;
 
 import com.feedle.feedleapi.Models.User;
 
-public class PostUserRequest extends Request {
+public class UpdateUserRequest extends Request{
     private User user;
-
-    public PostUserRequest(User user) {
-        super(RequestType.PostUser);
+    public UpdateUserRequest(User user)
+    {
+        super(RequestType.UpdateUser);
         this.user = user;
     }
 

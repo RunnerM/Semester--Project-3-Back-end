@@ -4,9 +4,10 @@ import com.feedle.feedleapi.Models.Comment;
 import com.feedle.feedleapi.Models.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface NewsService {
-    ArrayList<Post> getAllPost();
+    List<Post> getAllPost();
 
     void addPost(Post post);
 

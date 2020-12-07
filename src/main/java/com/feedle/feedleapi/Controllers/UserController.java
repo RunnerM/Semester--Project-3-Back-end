@@ -11,36 +11,41 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/feedle")// localhost:port/feedle
 public class UserController {
+    private UserService userService;
+
     @Autowired
-    private UserService service;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
     User authorizeUser() {
-        ArrayList<User> users = service.getUser();
+        List<User> users = userService.getUser();
         return new User();
     }
 
     @PostMapping("/user")
     void registerUser(@RequestBody User user) {
-        service.registerUser(user);
+        userService.registerUser(user);
     }
 
     @DeleteMapping("/user")
     @ResponseStatus(HttpStatus.OK)
     void DeleteUser(@RequestParam int Id) {
-        service.deleteUser(Id);
+        userService.deleteUser(Id);
 
     }
 
     @PatchMapping("/user")
     void UpdateUser(@RequestParam int Id, @RequestBody User user) {
-        service.updateUser(Id, user);
+        userService.updateUser(user);
 
     }
     /*

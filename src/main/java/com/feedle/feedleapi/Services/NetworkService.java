@@ -4,21 +4,22 @@ import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface NetworkService {
-    void addPost(Post post);
+    Post addPost(Post post);
 
-    void addUser(User user);
+    User addUser(User user);
 
-    ArrayList<User> getAllUser();
+    List<User> getAllUser();
 
-    ArrayList<Post> getAllPost();
+    List<Post> getAllPost();
 
-    void updatePost(Post post);
+    Post updatePost(Post post);
 
-    void updateUser();
+    User updateUser(User user);
 
-    void deleteUser(int UserId);
+    int deleteUser(int userId);
 
-    void deletePost(int PostId);
+    int deletePost(int postId);
 }

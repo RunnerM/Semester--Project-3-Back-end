@@ -4,35 +4,42 @@ import com.feedle.feedleapi.Models.Comment;
 import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Services.NewsService;
 import com.feedle.feedleapi.Services.NewsServiceManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class NewsController {
-    NewsService service = new NewsServiceManager();
+    private NewsService newsService;
+
+    @Autowired
+    public NewsController(NewsService newsService) {
+        this.newsService = newsService;
+    }
 
     @GetMapping("/posts")
-    ArrayList<Post> GetPosts() {
-        return service.getAllPost();
+    List<Post> GetPosts() {
+        return newsService.getAllPost();
     }
 
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
     void CreatePost(@RequestBody Post post) {
-        service.addPost(post);
+        newsService.addPost(post);
     }
 
     @DeleteMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
     void DeletePostById(@RequestParam int Id) {
-        service.removePost(Id);
+        newsService.removePost(Id);
     }
 
     @PostMapping("/posts/comment")
     void AddComment(@RequestParam int Id, @RequestBody Comment comment) {
-        service.addCommentToPost(Id, comment);
+        newsService.addCommentToPost(Id, comment);
     }
 //    @PostMapping("/posts/rate")
 //    void AddRate(@RequestParam int Id, @RequestParam String rating){

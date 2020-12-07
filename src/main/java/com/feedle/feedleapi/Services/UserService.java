@@ -3,16 +3,17 @@ package com.feedle.feedleapi.Services;
 import com.feedle.feedleapi.Models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UserService {
     void registerUser(User user);
 
     User authorizeUser(String username, String password);
 
-    void deleteUser(int Id);
+    void deleteUser(int id);
 
-    ArrayList<User> getUser();
+    List<User> getUser();
 
-    void updateUser(int Id, User user);
+    void updateUser(User user);
 
 }

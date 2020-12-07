@@ -42,10 +42,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(requestAsJson.getBytes());
             System.out.println("AddPostRequestSent");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            System.out.println(responseAsJson);
-           // AddPostRequest addPostResponse = mapper.convertValue(requestAsJson, AddPostRequest.class);
-            AddPostRequest addPostResponse = gson.fromJson(requestAsJson, AddPostRequest.class);
+            AddPostRequest addPostResponse = gson.fromJson(parseJson(response), AddPostRequest.class);
             return addPostResponse.getPost();
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,9 +59,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(requestAsJson.getBytes());
             System.out.println("AddUserRequestSent");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            //PostUserRequest postUserResponse = mapper.convertValue(requestAsJson, PostUserRequest.class);
-            PostUserRequest postUserResponse = gson.fromJson(requestAsJson, PostUserRequest.class);
+            PostUserRequest postUserResponse = gson.fromJson(parseJson(response), PostUserRequest.class);
             return postUserResponse.getUser();
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,9 +114,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(messageInBytes);
             System.out.println("UpdatePostRequestSent");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            //UpdatePostRequest updatePostResponse = mapper.convertValue(responseAsJson, UpdatePostRequest.class);
-            UpdatePostRequest updatePostResponse = gson.fromJson(responseAsJson, UpdatePostRequest.class);
+            UpdatePostRequest updatePostResponse = gson.fromJson(parseJson(response), UpdatePostRequest.class);
             return updatePostResponse.getPost();
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,9 +132,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(messageInBytes);
             System.out.println("UpdateUserRequestSent");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            //UpdateUserRequest updateUserResponse = mapper.convertValue(responseAsJson, UpdateUserRequest.class);
-            UpdateUserRequest updateUserResponse = gson.fromJson(responseAsJson, UpdateUserRequest.class);
+            UpdateUserRequest updateUserResponse = gson.fromJson(parseJson(response), UpdateUserRequest.class);
             return updateUserResponse.getUser();
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,9 +150,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(messageInBytes);
             System.out.println("DeleteUserRequest");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            //DeleteUserRequest deleteUserResponse = mapper.convertValue(responseAsJson, DeleteUserRequest.class);
-            DeleteUserRequest deleteUserResponse = gson.fromJson(responseAsJson, DeleteUserRequest.class);
+            DeleteUserRequest deleteUserResponse = gson.fromJson(parseJson(response), DeleteUserRequest.class);
             return deleteUserResponse.getUserId();
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,9 +169,7 @@ public class NetworkServiceManager implements NetworkService {
             out.write(messageInBytes);
             System.out.println("DeletePostRequest");
             byte[] response = in.readAllBytes();
-            String responseAsJson = new String(response);
-            //DeletePostRequest deletePostResponse = mapper.convertValue(responseAsJson, DeletePostRequest.class);
-            DeletePostRequest deletePostResponse = gson.fromJson(responseAsJson, DeletePostRequest.class);
+            DeletePostRequest deletePostResponse = gson.fromJson(parseJson(response), DeletePostRequest.class);
             return deletePostResponse.getPostId();
         } catch (Exception e) {
             e.printStackTrace();

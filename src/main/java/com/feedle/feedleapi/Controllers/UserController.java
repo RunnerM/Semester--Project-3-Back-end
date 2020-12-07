@@ -26,9 +26,8 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
-    User authorizeUser() {
-        List<User> users = userService.getUser();
-        return new User();
+    User authorizeUser(@RequestParam String username, @RequestParam String password) {
+        return userService.authorizeUser(username,password);
     }
 
     @PostMapping("/user")
@@ -48,54 +47,4 @@ public class UserController {
         userService.updateUser(user);
 
     }
-    /*
-    private User seedAuthorazition(String username, String password) {
-        ArrayList<Post> posts = new ArrayList<>();
-        ArrayList<UserConversation> conv = new ArrayList<>();
-        User user1 = new User();
-
-        user1.setUsername("Nicolai");
-        user1.setPassword("123abc");
-        user1.setSecurityLevel("admin");
-        user1.setDisplayedUsername("Nicolai");
-        user1.setUserConversations(conv);
-        user1.setUserPosts(posts);
-        User user2 = new User();
-        user2.setUsername("Marton");
-        user2.setPassword("123abc");
-        user2.setSecurityLevel("user");
-        user1.setDisplayedUsername("Nicolai");
-        user1.setUserConversations(conv);
-        user1.setUserPosts(posts);
-        User Default = new User();
-        Default.setUsername("Username or Password is wrong");
-
-        if(username.equals(user1.getUsername())&& password.equals(user1.getPassword())){
-            return user1;
-        }
-        if(username.equals(user2.getUsername())&& password.equals(user2.getPassword())){
-            return user2;
-        }
-        return Default;
-
-     */
-
-
-//        users.add(user1);
-//        users.add(user2);
-//        User u2= new User();
-//        u2.setUserName("default");
-//        for (User u:users) {
-//            if(u.getUserName().equals(username) && u.getPassword().equals(password)){
-//                return u;
-//            }else if(u.getUserName().equals(username)){
-//                u2.setUserName("User not found");
-//                return u2;
-//            }else if(u.getPassword().equals(password)){
-//                u2.setUserName("Incorrect password");
-//            }
-//        }
-//        return u2;
-    //return null;
-
 }

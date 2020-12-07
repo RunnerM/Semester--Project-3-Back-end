@@ -21,7 +21,6 @@ public class NetworkServiceManager implements NetworkService {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-    private ObjectMapper mapper = new ObjectMapper();
     private Gson gson = new Gson();
 
     private static int PORT = 5000;
@@ -37,7 +36,6 @@ public class NetworkServiceManager implements NetworkService {
     public Post addPost(Post post) {
         try {
             AddPostRequest addPostRequest = new AddPostRequest(post);
-            //String requestAsJson = mapper.writeValueAsString(addPostRequest);
             String requestAsJson = gson.toJson(addPostRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddPostRequestSent");
@@ -54,7 +52,6 @@ public class NetworkServiceManager implements NetworkService {
     public User addUser(User user) {
         try {
             PostUserRequest postUserRequest = new PostUserRequest(user);
-            // String requestAsJson = mapper.writeValueAsString(postUserRequest);
             String requestAsJson = gson.toJson(postUserRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddUserRequestSent");
@@ -71,7 +68,6 @@ public class NetworkServiceManager implements NetworkService {
     public List<User> getAllUser() {
         try {
             GetUsersRequest getUsersRequest = new GetUsersRequest();
-            //String requestAsJson = mapper.writeValueAsString(getUsersRequest);
             String requestAsJson = gson.toJson(getUsersRequest);
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
@@ -108,7 +104,6 @@ public class NetworkServiceManager implements NetworkService {
     public Post updatePost(Post post) {
         try {
             UpdatePostRequest updatePostRequest = new UpdatePostRequest(post);
-           // String requestAsJson = mapper.writeValueAsString(updatePostRequest);
             String requestAsJson = gson.toJson(updatePostRequest);
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
@@ -126,7 +121,6 @@ public class NetworkServiceManager implements NetworkService {
     public User updateUser(User user) {
         try {
             UpdateUserRequest updateUserRequest = new UpdateUserRequest(user);
-           // String requestAsJson = mapper.writeValueAsString(updateUserRequest);
             String requestAsJson = gson.toJson(updateUserRequest);
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
@@ -144,7 +138,6 @@ public class NetworkServiceManager implements NetworkService {
     public int deleteUser(int userId) {
         try {
             DeleteUserRequest deleteUserRequest = new DeleteUserRequest(userId);
-            //String requestAsJson = mapper.writeValueAsString(deleteUserRequest);
             String requestAsJson = gson.toJson(deleteUserRequest);
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
@@ -163,7 +156,6 @@ public class NetworkServiceManager implements NetworkService {
     public int deletePost(int postId) {
         try {
             DeletePostRequest deletePostRequest = new DeletePostRequest(postId);
-            //String requestAsJson = mapper.writeValueAsString(deletePostRequest);
             String requestAsJson = gson.toJson(deletePostRequest);
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);

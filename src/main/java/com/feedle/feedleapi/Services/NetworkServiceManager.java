@@ -39,7 +39,7 @@ public class NetworkServiceManager implements NetworkService {
             String requestAsJson = gson.toJson(addPostRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddPostRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             AddPostRequest addPostResponse = gson.fromJson(parseJson(response), AddPostRequest.class);
             return addPostResponse.getPost();
@@ -56,7 +56,7 @@ public class NetworkServiceManager implements NetworkService {
             String requestAsJson = gson.toJson(postUserRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddUserRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             PostUserRequest postUserResponse = gson.fromJson(parseJson(response), PostUserRequest.class);
             System.out.println(postUserResponse);
@@ -111,7 +111,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("UpdatePostRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             UpdatePostRequest updatePostResponse = gson.fromJson(parseJson(response), UpdatePostRequest.class);
             return updatePostResponse.getPost();
@@ -129,7 +129,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("UpdateUserRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             UpdateUserRequest updateUserResponse = gson.fromJson(parseJson(response), UpdateUserRequest.class);
             return updateUserResponse.getUser();
@@ -147,7 +147,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("DeleteUserRequest");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             DeleteUserRequest deleteUserResponse = gson.fromJson(parseJson(response), DeleteUserRequest.class);
             return deleteUserResponse.getUserId();
@@ -166,7 +166,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("DeletePostRequest");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             DeletePostRequest deletePostResponse = gson.fromJson(parseJson(response), DeletePostRequest.class);
             return deletePostResponse.getPostId();

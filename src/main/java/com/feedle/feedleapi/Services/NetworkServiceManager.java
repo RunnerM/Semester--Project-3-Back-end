@@ -57,6 +57,7 @@ public class NetworkServiceManager implements NetworkService {
             System.out.println("AddUserRequestSent");
             byte[] response = in.readAllBytes();
             PostUserRequest postUserResponse = gson.fromJson(parseJson(response), PostUserRequest.class);
+            System.out.println(postUserResponse);
             return postUserResponse.getUser();
         } catch (Exception e) {
             e.printStackTrace();

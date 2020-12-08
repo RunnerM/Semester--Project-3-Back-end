@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class UserController {
     @PostMapping("/user")
     void registerUser(@RequestBody User user) {
         userService.registerUser(user);
+        throw new ResponseStatusException(HttpStatus.CREATED);
+
     }
 
     @DeleteMapping("/user")

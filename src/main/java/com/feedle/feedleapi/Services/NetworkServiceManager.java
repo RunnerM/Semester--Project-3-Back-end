@@ -39,7 +39,8 @@ public class NetworkServiceManager implements NetworkService {
             String requestAsJson = gson.toJson(addPostRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddPostRequestSent");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             AddPostRequest addPostResponse = gson.fromJson(parseJson(response), AddPostRequest.class);
             return addPostResponse.getPost();
         } catch (Exception e) {
@@ -55,7 +56,8 @@ public class NetworkServiceManager implements NetworkService {
             String requestAsJson = gson.toJson(postUserRequest);
             out.write(requestAsJson.getBytes());
             System.out.println("AddUserRequestSent");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             PostUserRequest postUserResponse = gson.fromJson(parseJson(response), PostUserRequest.class);
             System.out.println(postUserResponse);
             return postUserResponse.getUser();
@@ -73,7 +75,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("GetUsersRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             GetUsersResponse getUsersResponse = gson.fromJson(parseJson(response), GetUsersResponse.class);
             return getUsersResponse.getUsers();
@@ -91,7 +93,7 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("GetPostsRequestSent");
-            byte[] response = new byte[1024];
+            byte[] response = new byte[1024*1024*8];
             in.read(response,0,response.length);
             GetPostsResponse getPostsResponse = gson.fromJson(parseJson(response), GetPostsResponse.class);
             return getPostsResponse.getPostList();
@@ -109,7 +111,8 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("UpdatePostRequestSent");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             UpdatePostRequest updatePostResponse = gson.fromJson(parseJson(response), UpdatePostRequest.class);
             return updatePostResponse.getPost();
         } catch (Exception e) {
@@ -126,7 +129,8 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("UpdateUserRequestSent");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             UpdateUserRequest updateUserResponse = gson.fromJson(parseJson(response), UpdateUserRequest.class);
             return updateUserResponse.getUser();
         } catch (Exception e) {
@@ -143,7 +147,8 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("DeleteUserRequest");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             DeleteUserRequest deleteUserResponse = gson.fromJson(parseJson(response), DeleteUserRequest.class);
             return deleteUserResponse.getUserId();
         } catch (Exception e) {
@@ -161,7 +166,8 @@ public class NetworkServiceManager implements NetworkService {
             byte[] messageInBytes = requestAsJson.getBytes();
             out.write(messageInBytes);
             System.out.println("DeletePostRequest");
-            byte[] response = in.readAllBytes();
+            byte[] response = new byte[1024];
+            in.read(response,0,response.length);
             DeletePostRequest deletePostResponse = gson.fromJson(parseJson(response), DeletePostRequest.class);
             return deletePostResponse.getPostId();
         } catch (Exception e) {

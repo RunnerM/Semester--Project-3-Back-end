@@ -70,7 +70,7 @@ public class UserServiceManager implements UserService{
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
        User updatedUser = networkService.updateUser(user);
        if (updatedUser != null) {
            for (int i = 0; i < users.size(); i++) {
@@ -81,5 +81,6 @@ public class UserServiceManager implements UserService{
                }
            }
        }
+       return updatedUser;
     }
 }

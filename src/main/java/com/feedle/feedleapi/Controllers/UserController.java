@@ -48,8 +48,8 @@ public class UserController {
     }
 
     @PatchMapping("/user")
-    void UpdateUser(@RequestParam int Id, @RequestBody User user) {
-        userService.updateUser(user);
+    void UpdateUser(@RequestBody User user) {
+         userService.updateUser(user);
 
     }
 }

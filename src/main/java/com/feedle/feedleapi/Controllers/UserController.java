@@ -3,6 +3,7 @@ package com.feedle.feedleapi.Controllers;
 import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Models.User;
 import com.feedle.feedleapi.Models.UserConversation;
+import com.feedle.feedleapi.Models.UserInformation;
 import com.feedle.feedleapi.Services.UserService;
 import com.feedle.feedleapi.Services.UserServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,15 @@ public class UserController {
         return userService.authorizeUser(username,password);
     }
 
+    @GetMapping("/user/userinfo")
+    UserInformation getUserInformation(@RequestParam int id){
+        return userService.getUserInformationById(id);
+    }
+
     @PostMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
     void registerUser(@RequestBody User user) {
         userService.registerUser(user);
-        throw new ResponseStatusException(HttpStatus.CREATED);
-
     }
 
     @DeleteMapping("/user")

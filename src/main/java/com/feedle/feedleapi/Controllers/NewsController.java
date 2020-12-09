@@ -25,6 +25,10 @@ public class NewsController {
         return newsService.getAllPost();
     }
 
+    @GetMapping("/posts/authorized")
+    List<Post> GetPostsForUser() {return  newsService.getAllPost();}
+
+
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
     void CreatePost(@RequestBody Post post) {

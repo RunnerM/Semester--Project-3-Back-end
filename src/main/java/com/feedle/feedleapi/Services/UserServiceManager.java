@@ -1,6 +1,7 @@
 package com.feedle.feedleapi.Services;
 
 import com.feedle.feedleapi.Models.User;
+import com.feedle.feedleapi.Models.UserInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +83,19 @@ public class UserServiceManager implements UserService{
            }
        }
        return updatedUser;
+    }
+
+    @Override
+    public UserInformation getUserInformationById(int id) {
+        for (int i = 0; i < users.size(); i++) {
+            if(users.get(i).id == id)
+            {
+                UserInformation userInformation = new UserInformation();
+                userInformation.id = users.get(i).id;
+                userInformation.username = users.get(i).username;
+                return userInformation;
+            }
+        }
+        return null;
     }
 }

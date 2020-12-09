@@ -17,4 +17,6 @@ public class Post {
     public int second ;
     //public byte[] images;
     public ArrayList<Comment> comments ;
+    public int approvals;
+    public int disapprovals;
 }

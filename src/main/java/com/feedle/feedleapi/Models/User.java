@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 @Data
 public class User implements Serializable {
     public int id;
@@ -13,4 +14,5 @@ public class User implements Serializable {
     public ArrayList<Post> userPosts;
     public ArrayList<UserConversation> userConversations;
     public int securityLevel;
+    public ArrayList<UserInformation> subscriptionUsersInformation;
 }

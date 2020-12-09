@@ -1,6 +1,7 @@
 package com.feedle.feedleapi.Services;
 
 import com.feedle.feedleapi.Models.User;
+import com.feedle.feedleapi.Models.UserInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,5 +16,7 @@ public interface UserService {
     List<User> getUser();
 
     User updateUser(User user);
+
+    UserInformation getUserInformationById(int id);
 
 }

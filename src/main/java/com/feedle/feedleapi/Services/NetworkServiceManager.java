@@ -13,14 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.List;
 
 @Service
 public class NetworkServiceManager implements NetworkService {
 
     private Socket socket;
-    private DataInputStream in;
-    private DataOutputStream out;
+    private InputStream in;
+    private OutputStream out;
     private Gson gson = new Gson();
 
     private static int PORT = 5000;
@@ -28,8 +29,8 @@ public class NetworkServiceManager implements NetworkService {
 
     public NetworkServiceManager() throws Exception {
         this.socket = new Socket(HOST, PORT);
-        in = new DataInputStream(socket.getInputStream());
-        out = new DataOutputStream(socket.getOutputStream());
+        in = socket.getInputStream();
+        out = socket.getOutputStream();
     }
 
     @Override
@@ -37,10 +38,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             AddPostRequest addPostRequest = new AddPostRequest(post);
             String requestAsJson = gson.toJson(addPostRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("AddPostRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             AddPostRequest addPostResponse = gson.fromJson(parseJson(response), AddPostRequest.class);
             return addPostResponse.getPost();
         } catch (Exception e) {
@@ -54,10 +54,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             PostUserRequest postUserRequest = new PostUserRequest(user);
             String requestAsJson = gson.toJson(postUserRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("AddUserRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             PostUserRequest postUserResponse = gson.fromJson(parseJson(response), PostUserRequest.class);
             return postUserResponse.getUser();
         } catch (Exception e) {
@@ -71,10 +70,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             GetUsersRequest getUsersRequest = new GetUsersRequest();
             String requestAsJson = gson.toJson(getUsersRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("GetUsersRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             GetUsersResponse getUsersResponse = gson.fromJson(parseJson(response), GetUsersResponse.class);
             return getUsersResponse.getUsers();
         } catch (Exception e) {
@@ -88,10 +86,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             GetPostsRequest getPostsRequest = new GetPostsRequest();
             String requestAsJson = gson.toJson(getPostsRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("GetPostsRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             GetPostsResponse getPostsResponse = gson.fromJson(parseJson(response), GetPostsResponse.class);
             return getPostsResponse.getPostList();
         } catch (Exception e) {
@@ -105,10 +102,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             UpdatePostRequest updatePostRequest = new UpdatePostRequest(post);
             String requestAsJson = gson.toJson(updatePostRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("UpdatePostRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             UpdatePostRequest updatePostResponse = gson.fromJson(parseJson(response), UpdatePostRequest.class);
             return updatePostResponse.getPost();
         } catch (Exception e) {
@@ -122,10 +118,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             UpdateUserRequest updateUserRequest = new UpdateUserRequest(user);
             String requestAsJson = gson.toJson(updateUserRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("UpdateUserRequestSent");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             UpdateUserRequest updateUserResponse = gson.fromJson(parseJson(response), UpdateUserRequest.class);
             return updateUserResponse.getUser();
         } catch (Exception e) {
@@ -139,10 +134,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             DeleteUserRequest deleteUserRequest = new DeleteUserRequest(userId);
             String requestAsJson = gson.toJson(deleteUserRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("DeleteUserRequest");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             DeleteUserRequest deleteUserResponse = gson.fromJson(parseJson(response), DeleteUserRequest.class);
             return deleteUserResponse.getUserId();
         } catch (Exception e) {
@@ -157,10 +151,9 @@ public class NetworkServiceManager implements NetworkService {
         try {
             DeletePostRequest deletePostRequest = new DeletePostRequest(postId);
             String requestAsJson = gson.toJson(deletePostRequest);
-            out.write(requestAsJson.getBytes());
+            send(out, requestAsJson);
             System.out.println("DeletePostRequest");
-            byte[] response = new byte[1024*1024*8];
-            in.read(response,0,response.length);
+            String response = read(in);
             DeletePostRequest deletePostResponse = gson.fromJson(parseJson(response), DeletePostRequest.class);
             return deletePostResponse.getPostId();
         } catch (Exception e) {
@@ -169,10 +162,34 @@ public class NetworkServiceManager implements NetworkService {
         return -1;
     }
 
-    private JsonReader parseJson(byte[] bytes)
-    {
-        JsonReader reader = new JsonReader(new StringReader(new String(bytes)));
+    private JsonReader parseJson(String json) {
+        JsonReader reader = new JsonReader(new StringReader(json));
         reader.setLenient(true);
         return reader;
     }
+
+    private String read(InputStream inputStream) throws IOException {
+        byte[] lenBytes = new byte[4];
+        inputStream.read(lenBytes, 0, 4);
+        int len = (((lenBytes[3] & 0xff) << 24) | ((lenBytes[2] & 0xff) << 16) |
+                ((lenBytes[1] & 0xff) << 8) | (lenBytes[0] & 0xff));
+        byte[] receivedBytes = new byte[len];
+        inputStream.read(receivedBytes, 0, len);
+        String receivedFromClient = new String(receivedBytes, 0, len);
+        return receivedFromClient;
+    }
+
+    private void send(OutputStream outputStream, String toSend) throws IOException {
+        byte[] toSendBytes = toSend.getBytes();
+        int toSendLen = toSendBytes.length;
+        byte[] toSendLenBytes = new byte[4];
+        toSendLenBytes[0] = (byte) (toSendLen & 0xff);
+        toSendLenBytes[1] = (byte) ((toSendLen >> 8) & 0xff);
+        toSendLenBytes[2] = (byte) ((toSendLen >> 16) & 0xff);
+        toSendLenBytes[3] = (byte) ((toSendLen >> 24) & 0xff);
+        outputStream.write(toSendLenBytes);
+        outputStream.write(toSendBytes);
+    }
+
+
 }

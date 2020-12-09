@@ -26,7 +26,7 @@ public class NewsController {
     }
 
     @GetMapping("/posts/authorized")
-    List<Post> GetPostsForUser() {return  newsService.getAllPost();}
+    List<Post> GetPostsForUser(@RequestParam int id) {return  newsService.getAllPost();}
 
 
     @PostMapping("/posts")

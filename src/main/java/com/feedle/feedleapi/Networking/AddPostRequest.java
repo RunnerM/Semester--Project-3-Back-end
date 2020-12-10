@@ -8,6 +8,7 @@ public class AddPostRequest extends Request{
     public AddPostRequest(Post post)
     {
         super(RequestType.AddPost);
+        this.post = post;
     }
 
     public Post getPost() {

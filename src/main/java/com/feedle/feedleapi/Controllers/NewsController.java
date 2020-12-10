@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/feedle")// localhost:port/feedle
 public class NewsController {
     private NewsService newsService;
 

@@ -34,10 +34,10 @@ public class NetworkServiceManager implements NetworkService {
     @Override
     public Post addPost(Post post) {
         try {
+            System.out.println(post.authorUserName);
             AddPostRequest addPostRequest = new AddPostRequest(post);
             String requestAsJson = gson.toJson(addPostRequest);
             send(out, requestAsJson);
-            System.out.println("AddPostRequestSent");
             String response = read(in);
             AddPostRequest addPostResponse = gson.fromJson(parseJson(response), AddPostRequest.class);
             return addPostResponse.getPost();

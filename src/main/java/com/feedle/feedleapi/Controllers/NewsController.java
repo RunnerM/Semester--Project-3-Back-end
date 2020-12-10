@@ -42,6 +42,11 @@ public class NewsController {
         newsService.removePost(Id);
     }
 
+    @PatchMapping("/posts")
+    @ResponseStatus(HttpStatus.OK)
+    void UpdatePost(@RequestBody Post post) {
+        newsService.updatePost(post);}
+
     @PostMapping("/posts/comment")
     void AddComment(@RequestParam int Id, @RequestBody Comment comment) {
         newsService.addCommentToPost(Id, comment);

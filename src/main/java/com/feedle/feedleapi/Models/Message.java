@@ -23,7 +23,7 @@ public class Message {
     /**
      * Represents the id of the author, used to connect the author to the commment.
      */
-    public int authorId;
+    public int UserId;
     /**
      * Represents the day of creation.
      */
@@ -48,4 +48,5 @@ public class Message {
      * Represents the second of creation.
      */
     public int second;
+    public int conversationId;
 }

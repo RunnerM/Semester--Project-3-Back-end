@@ -1,5 +1,7 @@
 package com.feedle.feedleapi.Services;
 
+import com.feedle.feedleapi.Models.Comment;
+import com.feedle.feedleapi.Models.Message;
 import com.feedle.feedleapi.Models.User;
 import com.feedle.feedleapi.Models.UserInformation;
 
@@ -18,5 +20,7 @@ public interface UserService {
     User updateUser(User user);
 
     UserInformation getUserInformationById(int id);
+
+    void sendMessage(Message message);
 
 }

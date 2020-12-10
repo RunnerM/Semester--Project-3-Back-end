@@ -22,7 +22,7 @@ public class Comment {
     /**
      * Represents the id of the author, used to connect the author to the commment.
      */
-    public int authorId;
+    public int userId;
     /**
      * Represents the name of the author, used for display purposes;
      */

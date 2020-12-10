@@ -22,6 +22,7 @@ public class User implements Serializable {
     /**
      * Represents the Username.
      */
+
     public String username;
     /**
      * Represents the Password.

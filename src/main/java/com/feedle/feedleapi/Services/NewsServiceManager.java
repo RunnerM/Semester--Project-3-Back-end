@@ -12,14 +12,16 @@ import java.util.List;
 public class NewsServiceManager implements NewsService {
 
     private NetworkService networkService;
+    private UserService userService;
     private List<Post> posts;
 
 
     @Autowired
-    public NewsServiceManager(NetworkService networkService)
+    public NewsServiceManager(NetworkService networkService, UserService userService)
     {
         this.networkService = networkService;
         this.posts = networkService.getAllPost();
+        this.userService = userService;
     }
     @Override
     public List<Post> getAllPost() {
@@ -69,14 +71,13 @@ public class NewsServiceManager implements NewsService {
 
     @Override
     public void addCommentToPost(int PostId, Comment comment) {
-        for (int i = 0; i<posts.size(); i++)
-        {
-            if (posts.get(i).id == PostId)
-            {
-                posts.get(i).comments.add(comment);
-                Post newPost = networkService.updatePost(posts.get(i));
-                posts.set(i,newPost);
-                break;
+        Comment commentResponse = networkService.postComment(comment);
+        if (commentResponse != null) {
+            for (int i = 0; i < posts.size(); i++) {
+                if (posts.get(i).id == PostId) {
+                    posts.get(i).comments.add(comment);
+                    break;
+                }
             }
         }
     }

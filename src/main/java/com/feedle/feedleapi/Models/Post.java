@@ -19,6 +19,7 @@ public class Post {
     /**
      * Represents the Title of the Post.
      * */
+    public int userId;
     public String title ;
     /**
      * Represents the body text in the Post.
@@ -57,4 +58,5 @@ public class Post {
     public ArrayList<Comment> comments ;
     public int approvals;
     public int disapprovals;
+
 }

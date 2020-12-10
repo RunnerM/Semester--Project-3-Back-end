@@ -1,5 +1,7 @@
 package com.feedle.feedleapi.Services;
 
+import com.feedle.feedleapi.Models.Comment;
+import com.feedle.feedleapi.Models.Message;
 import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Models.User;
 
@@ -22,4 +24,8 @@ public interface NetworkService {
     int deleteUser(int userId);
 
     int deletePost(int postId);
+
+    Comment postComment(Comment comment);
+
+    Message sendMessage(Message message);
 }

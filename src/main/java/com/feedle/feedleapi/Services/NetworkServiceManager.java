@@ -1,5 +1,7 @@
 package com.feedle.feedleapi.Services;
 
+import com.feedle.feedleapi.Models.Comment;
+import com.feedle.feedleapi.Models.Message;
 import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Models.User;
 import com.feedle.feedleapi.Networking.*;
@@ -71,6 +73,7 @@ public class NetworkServiceManager implements NetworkService {
             send(out, requestAsJson);
             System.out.println("GetUsersRequestSent");
             String response = read(in);
+            System.out.println(response);
             GetUsersResponse getUsersResponse = gson.fromJson(parseJson(response), GetUsersResponse.class);
             return getUsersResponse.getUsers();
         } catch (Exception e) {
@@ -158,6 +161,40 @@ public class NetworkServiceManager implements NetworkService {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    @Override
+    public Comment postComment(Comment comment) {
+        try {
+            AddCommentRequest addCommentRequest = new AddCommentRequest(comment);
+            String requestAsJson = gson.toJson(addCommentRequest);
+            send(out,requestAsJson);
+            System.out.println("PostCommentRequest");
+            String response = read(in);
+            AddCommentRequest addCommentResponse = gson.fromJson(parseJson(response),AddCommentRequest.class);
+            return addCommentResponse.getComment();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Message sendMessage(Message message) {
+        try {
+            SendMessageRequest sendMessageRequest = new SendMessageRequest(message);
+            String requestAsJson = gson.toJson(sendMessageRequest);
+            send(out,requestAsJson);
+            System.out.println("SendMessageRequest");
+            String response = read(in);
+            SendMessageRequest sendMessageResponse = gson.fromJson(parseJson(response),SendMessageRequest.class);
+            return sendMessageResponse.getMessage();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private JsonReader parseJson(String json) {

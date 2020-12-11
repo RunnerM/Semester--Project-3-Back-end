@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 @Service
-public class NetworkServiceManager implements NetworkService {
+public class    NetworkServiceManager implements NetworkService {
 
     private Socket socket;
     private InputStream in;

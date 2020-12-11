@@ -33,7 +33,7 @@ public class NewsServiceManager implements NewsService {
         Post acceptedPost = networkService.addPost(post);
         if (acceptedPost != null)
         {
-            posts.add(post);
+            posts.add(acceptedPost);
         }
     }
 

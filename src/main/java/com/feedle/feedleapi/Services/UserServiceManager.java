@@ -1,9 +1,6 @@
 package com.feedle.feedleapi.Services;
 
-import com.feedle.feedleapi.Models.Comment;
-import com.feedle.feedleapi.Models.Message;
-import com.feedle.feedleapi.Models.User;
-import com.feedle.feedleapi.Models.UserInformation;
+import com.feedle.feedleapi.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,16 +89,50 @@ public class UserServiceManager implements UserService {
     }
 
     @Override
-    public void sendMessage(Message message) {
+    public UserConversation sendMessage(Message message) {
         Message messageResponse = networkService.sendMessage(message);
         for (int i = 0; i < users.size(); i++) {
             if (messageResponse.UserId == users.get(i).id) {
                 for (int j = 0; j < users.get(i).userConversations.size(); i++) {
                     if (users.get(i).userConversations.get(j).conversationId == messageResponse.conversationId) {
                         users.get(i).userConversations.get(j).conversation.messages.add(messageResponse);
+                        return users.get(i).userConversations.get(j);
                     }
                 }
             }
         }
+        return null;
+    }
+
+    @Override
+    public List<UserConversation> getUserConversationsByUserId(int id) {
+        User user = getUserById(id);
+        if (user != null) {
+            return user.userConversations;
+        }
+        return null;
+    }
+
+    private User getUserById(int userId) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == userId)
+                return users.get(i);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean checkIfTheLastMessageIdIsEqualsToGivenId(int givenId, int userId) {
+        List<UserConversation> userConversations = this.getUserConversationsByUserId(userId);
+        int max = -1;
+        for (int i = 0; i < userConversations.size(); i++) {
+            int currentMax = userConversations.get(i).getLastMessageId();
+            if (currentMax > max)
+                max = currentMax;
+        }
+        if (max == -1 || max == givenId || max > givenId) {
+            return false;
+        } else
+            return true;
     }
 }

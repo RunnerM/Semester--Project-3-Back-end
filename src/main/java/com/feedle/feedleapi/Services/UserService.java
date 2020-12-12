@@ -1,9 +1,6 @@
 package com.feedle.feedleapi.Services;
 
-import com.feedle.feedleapi.Models.Comment;
-import com.feedle.feedleapi.Models.Message;
-import com.feedle.feedleapi.Models.User;
-import com.feedle.feedleapi.Models.UserInformation;
+import com.feedle.feedleapi.Models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +18,10 @@ public interface UserService {
 
     UserInformation getUserInformationById(int id);
 
-    void sendMessage(Message message);
+    UserConversation sendMessage(Message message);
+
+    List<UserConversation> getUserConversationsByUserId (int id);
+
+    Boolean checkIfTheLastMessageIdIsEqualsToGivenId(int userId, int givenId);
 
 }

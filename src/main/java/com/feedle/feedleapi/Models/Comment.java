@@ -51,4 +51,9 @@ public class Comment {
      * Represents the second of creation.
      */
     public int second;
+
+    /**
+     * Represents the post reference
+     */
+    public int postId;
 }

@@ -75,7 +75,7 @@ public class NewsServiceManager implements NewsService {
         if (commentResponse != null) {
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).id == PostId) {
-                    posts.get(i).comments.add(comment);
+                    posts.get(i).comments.add(commentResponse);
                     break;
                 }
             }

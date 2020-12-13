@@ -1,9 +1,6 @@
 package com.feedle.feedleapi.Services;
 
-import com.feedle.feedleapi.Models.Comment;
-import com.feedle.feedleapi.Models.Message;
-import com.feedle.feedleapi.Models.Post;
-import com.feedle.feedleapi.Models.User;
+import com.feedle.feedleapi.Models.*;
 import com.feedle.feedleapi.Networking.*;
 import com.feedle.feedleapi.Services.NetworkService;
 import com.google.gson.Gson;
@@ -196,6 +193,113 @@ public class    NetworkServiceManager implements NetworkService {
         }
         return null;
     }
+
+    @Override
+    public int deleteComment(int commentId) {
+        try {
+            DeleteCommentRequest deleteCommentRequest = new DeleteCommentRequest(commentId);
+            String requestAsJson = gson.toJson(deleteCommentRequest);
+            send(out,requestAsJson);
+            System.out.println("SendDeleteComment");
+            String response = read(in);
+            DeleteCommentRequest deleteCommentResponse = gson.fromJson(parseJson(response),DeleteCommentRequest.class);
+            return deleteCommentRequest.getCommentId();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
+    public List<UserConversation>  addConversation(Conversation conversation, int creatorId, int withWhomId) {
+        try {
+            AddConversationRequest addConversationRequest = new AddConversationRequest(conversation,creatorId,withWhomId);
+            String requestAsJson = gson.toJson(addConversationRequest);
+            send(out,requestAsJson);
+            System.out.println("AddConversation");
+            String response = read(in);
+            AddConversationResponse addConversationResponse = gson.fromJson(parseJson(response),AddConversationResponse.class);
+            return addConversationResponse.getUserConversations();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public FriendRequestNotification makeFriendRequest(FriendRequestNotification friendRequestNotification) {
+        try {
+            MakeFriendRequest makeFriendRequest = new MakeFriendRequest(friendRequestNotification);
+            String requestAsJson = gson.toJson(makeFriendRequest);
+            send(out,requestAsJson);
+            System.out.println("MakeFriendRequestCalled");
+            String response = read(in);
+            MakeFriendRequest makeFriendResponse = gson.fromJson(parseJson(response),MakeFriendRequest.class);
+            return makeFriendRequest.getFriendRequestNotification();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<UserFriend> respondToFriendRequest(FriendRequestNotification friendRequestNotification,boolean status) {
+        try{
+            RespondToFriendRequest respondToFriendRequest = new RespondToFriendRequest(status,friendRequestNotification);
+            String requestAsJson = gson.toJson(respondToFriendRequest);
+            send(out,requestAsJson);
+            System.out.println("RespondToFriendCalled");
+            String response = read(in);
+            RespondToFriendResponse respondToFriendResponse = gson.fromJson(parseJson(response),RespondToFriendResponse.class);
+            return respondToFriendResponse.getUserFriends();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public UserSubscription subscribeToUser(UserSubscription userSubscription) {
+        try {
+            SubscribeToUserRequest subscribeToUserRequest = new SubscribeToUserRequest(userSubscription);
+            String requestAsJson = gson.toJson(subscribeToUserRequest);
+            send(out,requestAsJson);
+            System.out.println("SubscribeToUserCalled");
+            String response = read(in);
+            SubscribeToUserRequest subscribeToUserResponse = gson.fromJson(parseJson(response),SubscribeToUserRequest.class);
+            return subscribeToUserRequest.getUserSubscription();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int unsubscribeFromUser(int subscriptionId) {
+        try {
+            UnsubscribeRequest unsubscribeRequest = new UnsubscribeRequest(subscriptionId);
+            String requestAsJson = gson.toJson(unsubscribeRequest);
+            send(out,requestAsJson);
+            System.out.println("UnsubscribeFromUserCalled");
+            String response = read(in);
+            UnsubscribeRequest unsubscribeResponse = gson.fromJson(parseJson(response),UnsubscribeRequest.class);
+            return unsubscribeResponse.getSubscriptionId();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     private JsonReader parseJson(String json) {
         JsonReader reader = new JsonReader(new StringReader(json));

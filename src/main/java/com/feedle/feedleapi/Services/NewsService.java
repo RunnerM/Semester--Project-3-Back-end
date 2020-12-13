@@ -17,5 +17,6 @@ public interface NewsService {
 
     void addCommentToPost(int PostId, Comment comment);
 
+    Boolean deleteComment(int CommentId, int postId);
 
 }

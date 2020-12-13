@@ -24,4 +24,20 @@ public interface UserService {
 
     Boolean checkIfTheLastMessageIdIsEqualsToGivenId(int userId, int givenId);
 
+    Boolean checkIfTheLastNotificationIdIsEqualsToGivenId(int userId, int notificationId);
+
+    Boolean subscribeToUser(UserSubscription userSubscription);
+
+    Boolean unsubscribeFromUser(int subscriptionId, int userId);
+
+    List<FriendRequestNotification> getFriendNotificationsForUser(int userId);
+
+    Boolean makeFriendRequest(FriendRequestNotification friendRequestNotification);
+
+    UserConversation addConversation (Conversation conversation, int creatorId, int withWhomId);
+
+    Boolean responseToFriendRequest(FriendRequestNotification friendRequestNotification, boolean status);
+
+
+
 }

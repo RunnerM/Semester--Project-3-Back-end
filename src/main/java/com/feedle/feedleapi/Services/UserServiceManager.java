@@ -135,4 +135,116 @@ public class UserServiceManager implements UserService {
         } else
             return true;
     }
+
+    @Override
+    public Boolean makeFriendRequest(FriendRequestNotification friendRequestNotification) {
+        FriendRequestNotification friendRequestNotificationResponse = networkService.makeFriendRequest(friendRequestNotification);
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == friendRequestNotification.creatorId) {
+                users.get(i).friendRequestNotifications.add(friendRequestNotificationResponse);
+                break;
+            }
+        }
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
+                users.get(i).friendRequestNotifications.add(friendRequestNotificationResponse);
+                break;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public UserConversation addConversation(Conversation conversation, int creatorId, int withWhomId) {
+        List<UserConversation> userConversations = networkService.addConversation(conversation, creatorId, withWhomId);
+        User user = null;
+        User otherUser = null;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == userConversations.get(0).userId) {
+                user = users.get(i);
+                break;
+            }
+        }
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == userConversations.get(1).userId) {
+                otherUser = users.get(i);
+                break;
+            }
+        }
+        if (user != null && otherUser != null) {
+            user.userConversations.add(userConversations.get(0));
+            otherUser.userConversations.add(userConversations.get(1));
+            return userConversations.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean responseToFriendRequest(FriendRequestNotification friendRequestNotification, boolean status) {
+        List<UserFriend> userFriends = networkService.respondToFriendRequest(friendRequestNotification, status);
+        if (userFriends != null) {
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
+                    users.get(i).friendRequestNotifications.remove(friendRequestNotification);
+                    users.get(i).userFriends.add(userFriends.get(1));
+                    break;
+                }
+            }
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).id == friendRequestNotification.creatorId) {
+                    users.get(i).friendRequestNotifications.remove(friendRequestNotification);
+                    users.get(i).userFriends.add(userFriends.get(0));
+                    break;
+                }
+            }
+            return true;
+
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean subscribeToUser(UserSubscription userSubscription) {
+        UserSubscription userSubscriptionResponse = networkService.subscribeToUser(userSubscription);
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == userSubscriptionResponse.userId) {
+                users.get(i).userSubscriptions.add(userSubscriptionResponse);
+                break;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean unsubscribeFromUser(int subscriptionId, int userId) {
+        int toDelete = networkService.unsubscribeFromUser(subscriptionId);
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).id == userId) {
+                for (int j = 0; j < users.get(i).userSubscriptions.size(); j++) {
+                    if (users.get(i).userSubscriptions.get(j).userSubscriptionId == toDelete) {
+                        users.get(i).userSubscriptions.remove(j);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean checkIfTheLastNotificationIdIsEqualsToGivenId(int userId, int notificationId) {
+        List<FriendRequestNotification> friendRequestNotificationsOfUser = getUserById(userId).friendRequestNotifications;
+        int max = -1;
+        for (int i = 0; i < friendRequestNotificationsOfUser.size(); i++) {
+            if (friendRequestNotificationsOfUser.get(i).friendRequestId > max)
+                max = friendRequestNotificationsOfUser.get(i).friendRequestId;
+        }
+        return max > notificationId;
+    }
+
+    @Override
+    public List<FriendRequestNotification> getFriendNotificationsForUser(int userId) {
+        List<FriendRequestNotification> friendRequestNotifications = getUserById(userId).friendRequestNotifications;
+        return friendRequestNotifications;
+    }
 }

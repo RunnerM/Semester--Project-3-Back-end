@@ -17,12 +17,12 @@ public class NewsServiceManager implements NewsService {
 
 
     @Autowired
-    public NewsServiceManager(NetworkService networkService, UserService userService)
-    {
+    public NewsServiceManager(NetworkService networkService, UserService userService) {
         this.networkService = networkService;
         this.posts = networkService.getAllPost();
         this.userService = userService;
     }
+
     @Override
     public List<Post> getAllPost() {
         return this.posts;
@@ -31,8 +31,7 @@ public class NewsServiceManager implements NewsService {
     @Override
     public void addPost(Post post) {
         Post acceptedPost = networkService.addPost(post);
-        if (acceptedPost != null)
-        {
+        if (acceptedPost != null) {
             posts.add(acceptedPost);
         }
     }
@@ -40,33 +39,27 @@ public class NewsServiceManager implements NewsService {
     @Override
     public void removePost(int id) {
         int newId = networkService.deletePost(id);
-        if (newId != -1)
-        {
-            for (int i =0;i<posts.size();i++)
-            {
+        if (newId != -1) {
+            for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).id == newId) {
                     posts.remove(i);
                     break;
                 }
             }
-        }
-        else System.out.println("PostForRemoveNotFound");
+        } else System.out.println("PostForRemoveNotFound");
     }
 
     @Override
     public void updatePost(Post post) {
         Post postForUpdate = networkService.updatePost(post);
-        if (postForUpdate!=null){
-            for (int i = 0; i<posts.size(); i++)
-            {
-                if (posts.get(i).id == postForUpdate.id)
-                {
-                    posts.set(i,postForUpdate);
+        if (postForUpdate != null) {
+            for (int i = 0; i < posts.size(); i++) {
+                if (posts.get(i).id == postForUpdate.id) {
+                    posts.set(i, postForUpdate);
                     break;
                 }
             }
-        }
-        else System.out.println("BadPostForUpdateGiven");
+        } else System.out.println("BadPostForUpdateGiven");
     }
 
     @Override
@@ -80,5 +73,30 @@ public class NewsServiceManager implements NewsService {
                 }
             }
         }
+    }
+
+    @Override
+    public Boolean deleteComment(int CommentId, int PostId) {
+
+        Post postToBeUpdated = null;
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).id == PostId) {
+                postToBeUpdated = posts.get(i);
+                break;
+            }
+        }
+        if (postToBeUpdated != null) {
+            int idOfDeletion = networkService.deleteComment(CommentId);
+            if (idOfDeletion != -1) {
+                for (int i = 0; i < postToBeUpdated.comments.size(); i++) {
+                    if (postToBeUpdated.comments.get(i).id == CommentId) {
+                        postToBeUpdated.comments.remove(postToBeUpdated.comments.get(i).id);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
     }
 }

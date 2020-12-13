@@ -51,8 +51,10 @@ public class NewsController {
     void AddComment(@RequestParam int Id, @RequestBody Comment comment) {
         newsService.addCommentToPost(Id, comment);
     }
-//    @PostMapping("/posts/rate")
-//    void AddRate(@RequestParam int Id, @RequestParam String rating){
-//
-//    }
+
+    @DeleteMapping("/posts/comment")
+    boolean DeleteComment(@RequestParam int commentId, int postId)
+    {
+       return newsService.deleteComment(commentId,postId);
+    }
 }

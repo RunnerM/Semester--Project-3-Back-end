@@ -1,9 +1,6 @@
 package com.feedle.feedleapi.Services;
 
-import com.feedle.feedleapi.Models.Comment;
-import com.feedle.feedleapi.Models.Message;
-import com.feedle.feedleapi.Models.Post;
-import com.feedle.feedleapi.Models.User;
+import com.feedle.feedleapi.Models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,4 +25,17 @@ public interface NetworkService {
     Comment postComment(Comment comment);
 
     Message sendMessage(Message message);
+
+    int deleteComment(int commentId);
+
+    FriendRequestNotification makeFriendRequest(FriendRequestNotification friendRequestNotification);
+
+    List<UserFriend> respondToFriendRequest(FriendRequestNotification friendRequestNotification,boolean status);
+
+    UserSubscription subscribeToUser(UserSubscription userSubscription);
+
+    int unsubscribeFromUser(int subscriptionId);
+
+    List<UserConversation> addConversation(Conversation conversation,int creatorId, int withWhomId);
+
 }

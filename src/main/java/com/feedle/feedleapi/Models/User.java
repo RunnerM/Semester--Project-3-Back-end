@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 /** Represents a user.
  * Getters/Setters, no argument constructor, equals(), canEqual(),
  * hashCode(), ToString() are available and generated at runtime.
@@ -40,6 +42,9 @@ public class User implements Serializable {
      * Represents the posts of the user.
      **/
     public ArrayList<UserConversation> userConversations;
+    public ArrayList<UserSubscription> userSubscriptions;
+    public ArrayList<UserFriend> userFriends;
+    public ArrayList<FriendRequestNotification> friendRequestNotifications;
     /**
      * Represents the security level of the user either 1 or 2
      * depending on the user privileges.

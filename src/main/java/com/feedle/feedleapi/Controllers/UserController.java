@@ -64,19 +64,62 @@ public class UserController {
     }
 
     @GetMapping("/getMessages")
-    public ResponseEntity<List<UserConversation>> getMessage(@RequestParam int lastMessageId, int userId) throws InterruptedException {
-       if (userService.checkIfTheLastMessageIdIsEqualsToGivenId(userId,lastMessageId))
-       {
-           return ResponseEntity.ok(userService.getUserConversationsByUserId(userId));
-       }
-       return keepPolling(lastMessageId,userId);
+    public ResponseEntity<List<UserConversation>> getMessage(@RequestParam int lastMessageId, @RequestParam int userId) throws InterruptedException {
+        if (userService.checkIfTheLastMessageIdIsEqualsToGivenId(userId, lastMessageId))
+            return ResponseEntity.ok(userService.getUserConversationsByUserId(userId));
+        return keepPollingForMessages(lastMessageId, userId);
     }
 
-    private ResponseEntity<List<UserConversation>> keepPolling(@RequestParam int lastMessageId, int userId) throws InterruptedException {
+    @PatchMapping("/user/subscribe")
+    public boolean subscribeToUser(@RequestBody UserSubscription userSubscription)
+    {
+        return this.userService.subscribeToUser(userSubscription);
+    }
+
+    @PatchMapping("/user/respondToFriendNotification")
+    public boolean respondToFriendNotification (@RequestParam boolean status, @RequestBody FriendRequestNotification friendRequestNotification )
+    {
+       return this.userService.responseToFriendRequest(friendRequestNotification,status);
+    }
+
+    @PostMapping("/user/makeFriendRequest")
+    public boolean makeFriendRequestNotification(@RequestBody FriendRequestNotification friendRequestNotification)
+    {
+        return userService.makeFriendRequest(friendRequestNotification);
+    }
+
+    @PatchMapping("user/unsubscribe")
+    public boolean unsubscribeFromUser(@RequestParam int userId, @RequestParam int subscriptionId)
+    {
+        return this.userService.unsubscribeFromUser(subscriptionId,userId);
+    }
+
+    @PostMapping("user/conversation")
+    public UserConversation addConversation(@RequestParam int creatorId, @RequestParam int withWhomId, @RequestBody Conversation conversation)
+    {
+        return this.userService.addConversation(conversation,creatorId, withWhomId);
+    }
+
+    @GetMapping("/getFriendNotifications")
+    public ResponseEntity<List<FriendRequestNotification>> getFriendNotifications(@RequestParam int lastNotificationId, @RequestParam int userId) throws InterruptedException {
+        if (userService.checkIfTheLastNotificationIdIsEqualsToGivenId(userId,lastNotificationId))
+            return ResponseEntity.ok(userService.getFriendNotificationsForUser(userId));
+        return keepPollingForNotifications(lastNotificationId,userId);
+    }
+
+    private ResponseEntity<List<UserConversation>> keepPollingForMessages(@RequestParam int lastMessageId, @RequestParam int userId) throws InterruptedException {
         Thread.sleep(5000);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/getMessages?lastMessageId=" + lastMessageId +"&userId=" + userId));
+        headers.setLocation(URI.create("/getMessages?lastMessageId=" + lastMessageId + "&userId=" + userId));
+        return new ResponseEntity<>(headers, HttpStatus.TEMPORARY_REDIRECT);
+    }
+
+    private ResponseEntity<List<FriendRequestNotification>> keepPollingForNotifications(@RequestParam int lastNotificationId, @RequestParam int userId) throws InterruptedException {
+        Thread.sleep(5000);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/getFriendNotifications?lastNotificationId=" +lastNotificationId+"&userId="+userId));
         return new ResponseEntity<>(headers,HttpStatus.TEMPORARY_REDIRECT);
+
     }
 
 

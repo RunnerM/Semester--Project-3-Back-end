@@ -28,4 +28,6 @@ public class Conversation {
      * Stores the Connections between the Users and Conversation.
      * */
     public ArrayList<UserConversation> userConversations ;
+
+    public int withWhomUserId;
 }

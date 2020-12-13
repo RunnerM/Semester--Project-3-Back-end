@@ -32,6 +32,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public User authorizeUser(@RequestParam String username, @RequestParam String password) {
         return userService.authorizeUser(username, password);
+        //Todo: make this to return 404 if no user.
     }
 
     @GetMapping("/user/userinfo")
@@ -49,7 +50,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void DeleteUser(@RequestParam int Id) {
         userService.deleteUser(Id);
-
     }
 
     @PatchMapping("/user")

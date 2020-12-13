@@ -19,6 +19,7 @@ public class UserConversation {
     public int conversationId;
     public User user;
     public Conversation conversation;
+    public int withWhomUserId;
 
     public int getLastMessageId()
     {

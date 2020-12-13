@@ -29,5 +29,5 @@ public class Conversation {
      * */
     public ArrayList<UserConversation> userConversations ;
 
-    public int withWhomUserId;
+
 }

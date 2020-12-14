@@ -90,7 +90,7 @@ public class NewsServiceManager implements NewsService {
             if (idOfDeletion != -1) {
                 for (int i = 0; i < postToBeUpdated.comments.size(); i++) {
                     if (postToBeUpdated.comments.get(i).id == CommentId) {
-                        postToBeUpdated.comments.remove(postToBeUpdated.comments.get(i).id);
+                        postToBeUpdated.comments.remove(postToBeUpdated.comments.get(i));
                         return true;
                     }
                 }

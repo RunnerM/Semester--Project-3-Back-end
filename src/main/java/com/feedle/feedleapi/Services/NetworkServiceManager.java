@@ -150,7 +150,7 @@ public class    NetworkServiceManager implements NetworkService {
             DeletePostRequest deletePostRequest = new DeletePostRequest(postId);
             String requestAsJson = gson.toJson(deletePostRequest);
             send(out, requestAsJson);
-            System.out.println("DeletePostRequest");
+            System.out.println("DeletePostRequest " + requestAsJson);
             String response = read(in);
             DeletePostRequest deletePostResponse = gson.fromJson(parseJson(response), DeletePostRequest.class);
             return deletePostResponse.getPostId();

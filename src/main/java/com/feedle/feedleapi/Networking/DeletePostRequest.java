@@ -5,6 +5,7 @@ public class DeletePostRequest extends Request{
     public DeletePostRequest(int postId)
     {
         super(RequestType.DeletePost);
+        this.postId = postId;
     }
 
     public int getPostId() {

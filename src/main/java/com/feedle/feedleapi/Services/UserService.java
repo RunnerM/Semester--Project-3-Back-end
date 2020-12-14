@@ -38,6 +38,8 @@ public interface UserService {
 
     Boolean responseToFriendRequest(FriendRequestNotification friendRequestNotification, boolean status);
 
+    void addPostForUser(int userId, Post post);
+
 
 
 }

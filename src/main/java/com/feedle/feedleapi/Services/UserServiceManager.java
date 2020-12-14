@@ -140,16 +140,27 @@ public class UserServiceManager implements UserService {
 
     @Override
     public Boolean makeFriendRequest(FriendRequestNotification friendRequestNotification) {
+        FriendRequestNotification echoFriendRequest = new FriendRequestNotification();
+        echoFriendRequest.userId = friendRequestNotification.potentialFriendUserId;
+        echoFriendRequest.creatorId = friendRequestNotification.creatorId;
+        echoFriendRequest.creatorUserName = friendRequestNotification.creatorUserName;
+        echoFriendRequest.content = friendRequestNotification.content;
+        echoFriendRequest.potentialFriendUserId = friendRequestNotification.userId;
+        echoFriendRequest.potentialFriendUserName = friendRequestNotification.potentialFriendUserName;
+
         FriendRequestNotification friendRequestNotificationResponse = networkService.makeFriendRequest(friendRequestNotification);
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).id == friendRequestNotification.creatorId) {
+            if (users.get(i).id == friendRequestNotificationResponse.userId) {
                 users.get(i).friendRequestNotifications.add(friendRequestNotificationResponse);
+                System.out.println(users.get(i).friendRequestNotifications.size());
                 break;
             }
         }
+        FriendRequestNotification echoRequestNotificationResponse = networkService.makeFriendRequest(echoFriendRequest);
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
-                users.get(i).friendRequestNotifications.add(friendRequestNotificationResponse);
+            if (users.get(i).id == echoRequestNotificationResponse.userId) {
+                users.get(i).friendRequestNotifications.add(echoRequestNotificationResponse);
+                System.out.println(users.get(i).friendRequestNotifications.size());
                 break;
             }
         }
@@ -193,7 +204,7 @@ public class UserServiceManager implements UserService {
                 }
             }
             for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).id == friendRequestNotification.creatorId) {
+                if (users.get(i).id == friendRequestNotification.userId) {
                     users.get(i).friendRequestNotifications.remove(friendRequestNotification);
                     users.get(i).userFriends.add(userFriends.get(0));
                     break;
@@ -248,5 +259,15 @@ public class UserServiceManager implements UserService {
     public List<FriendRequestNotification> getFriendNotificationsForUser(int userId) {
         List<FriendRequestNotification> friendRequestNotifications = getUserById(userId).friendRequestNotifications;
         return friendRequestNotifications;
+    }
+
+    @Override
+    public void addPostForUser(int userId, Post post) {
+        User user = getUserById(userId);
+        if (user.userPosts == null)
+        {
+            user.userPosts = new ArrayList<>();
+        }
+        user.userPosts.add(post);
     }
 }

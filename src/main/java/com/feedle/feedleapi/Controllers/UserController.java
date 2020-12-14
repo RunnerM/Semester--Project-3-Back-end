@@ -88,7 +88,7 @@ public class UserController {
         return userService.makeFriendRequest(friendRequestNotification);
     }
 
-    @PatchMapping("user/unsubscribe")
+    @DeleteMapping("user/unsubscribe")
     public boolean unsubscribeFromUser(@RequestParam int userId, @RequestParam int subscriptionId)
     {
         return this.userService.unsubscribeFromUser(subscriptionId,userId);

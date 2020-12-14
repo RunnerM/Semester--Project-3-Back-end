@@ -81,7 +81,9 @@ public class UserServiceManager implements UserService {
             if (users.get(i).id == id) {
                 UserInformation userInformation = new UserInformation();
                 userInformation.id = users.get(i).id;
-                userInformation.username = users.get(i).username;
+                userInformation.userName = users.get(i).username;
+                userInformation.userFriends = users.get(i).userFriends;
+                userInformation.userSubscriptions = users.get(i).userSubscriptions;
                 return userInformation;
             }
         }

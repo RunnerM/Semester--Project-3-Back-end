@@ -38,8 +38,8 @@ public class NewsController {
 
     @DeleteMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
-    void DeletePostById(@RequestParam int Id) {
-        newsService.removePost(Id);
+    void DeletePostById(@RequestParam int id) {
+        newsService.removePost(id);
     }
 
     @PatchMapping("/posts")
@@ -53,7 +53,7 @@ public class NewsController {
     }
 
     @DeleteMapping("/posts/comment")
-    boolean DeleteComment(@RequestParam int commentId, int postId)
+    boolean DeleteComment(@RequestParam int commentId, @RequestParam int postId)
     {
        return newsService.deleteComment(commentId,postId);
     }

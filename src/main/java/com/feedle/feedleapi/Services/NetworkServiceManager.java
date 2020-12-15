@@ -255,6 +255,7 @@ public class    NetworkServiceManager implements NetworkService {
             send(out,requestAsJson);
             System.out.println("RespondToFriendCalled");
             String response = read(in);
+            System.out.println(response);
             RespondToFriendResponse respondToFriendResponse = gson.fromJson(parseJson(response),RespondToFriendResponse.class);
             return respondToFriendResponse.getUserFriends();
         }

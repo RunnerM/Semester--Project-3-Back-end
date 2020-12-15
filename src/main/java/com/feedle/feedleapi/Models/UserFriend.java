@@ -7,4 +7,5 @@ public class UserFriend {
     public int userFriendId;
     public int userId;
     public int friendId;
+    public String userName;
 }

@@ -195,6 +195,7 @@ public class UserServiceManager implements UserService {
     @Override
     public Boolean responseToFriendRequest(FriendRequestNotification friendRequestNotification, boolean status) {
         List<UserFriend> userFriends = networkService.respondToFriendRequest(friendRequestNotification, status);
+        System.out.println(userFriends.get(0).friendId + " " + userFriends.get(1).friendId);
         if (userFriends != null) {
             for (int i = 0; i < users.size(); i++) {
                 if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
@@ -222,19 +223,21 @@ public class UserServiceManager implements UserService {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).id == userSubscriptionResponse.userId) {
                 users.get(i).userSubscriptions.add(userSubscriptionResponse);
-                break;
+                return true;
             }
         }
-        return null;
+        return false;
+
     }
 
     @Override
     public Boolean unsubscribeFromUser(int subscriptionId, int userId) {
         int toDelete = networkService.unsubscribeFromUser(subscriptionId);
+        System.out.println(toDelete);
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).id == userId) {
                 for (int j = 0; j < users.get(i).userSubscriptions.size(); j++) {
-                    if (users.get(i).userSubscriptions.get(j).userSubscriptionId == toDelete) {
+                    if (users.get(i).userSubscriptions.get(j).subscriptionId == toDelete) {
                         users.get(i).userSubscriptions.remove(j);
                         return true;
                     }

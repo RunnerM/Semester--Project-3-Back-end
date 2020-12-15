@@ -33,7 +33,7 @@ public class NewsServiceManager implements NewsService {
         Post acceptedPost = networkService.addPost(post);
         if (acceptedPost != null) {
             posts.add(acceptedPost);
-            userService.addPostForUser(post.userId,post);
+            userService.addPostForUser(post.userId,acceptedPost);
         }
     }
 
@@ -43,6 +43,13 @@ public class NewsServiceManager implements NewsService {
         if (newId != -1) {
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).id == newId) {
+                    for (int j = 0; j< userService.getUser().size(); j++)
+                    {
+                        if (userService.getUser().get(j).id == posts.get(i).userId)
+                        {
+                            userService.getUser().get(j).userPosts.remove(posts.get(i));
+                        }
+                    }
                     posts.remove(i);
                     break;
                 }

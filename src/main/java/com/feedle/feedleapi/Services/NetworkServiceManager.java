@@ -238,7 +238,7 @@ public class    NetworkServiceManager implements NetworkService {
             System.out.println("MakeFriendRequestCalled");
             String response = read(in);
             MakeFriendRequest makeFriendResponse = gson.fromJson(parseJson(response),MakeFriendRequest.class);
-            return makeFriendRequest.getFriendRequestNotification();
+            return makeFriendResponse.getFriendRequestNotification();
         }
         catch (Exception e)
         {

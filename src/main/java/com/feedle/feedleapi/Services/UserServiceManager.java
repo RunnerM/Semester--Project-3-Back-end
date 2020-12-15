@@ -196,18 +196,18 @@ public class UserServiceManager implements UserService {
         if (userFriends != null) {
             for (int i = 0; i < users.size(); i++) {
                 if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
-                    users.get(i).friendRequestNotifications.remove(friendRequestNotification);
+                    for (int j = 0; j<users.get(j).friendRequestNotifications.size(); j++)
+                    {
+                        if (users.get(i).friendRequestNotifications.get(j).creatorId == friendRequestNotification.creatorId && users.get(i).friendRequestNotifications.get(j).userId == friendRequestNotification.potentialFriendUserId)
+                            users.get(i).friendRequestNotifications.remove(j);
+                    }
                     users.get(i).userFriends.add(userFriends.get(1));
                     break;
                 }
             }
             for (int i = 0; i < users.size(); i++) {
                 if (users.get(i).id == friendRequestNotification.userId) {
-                    for (int j = 0; j<users.get(j).friendRequestNotifications.size(); j++)
-                    {
-                        if (users.get(i).friendRequestNotifications.get(j).creatorId == friendRequestNotification.creatorId && users.get(i).friendRequestNotifications.get(j).userId == friendRequestNotification.potentialFriendUserId)
-                            users.get(i).friendRequestNotifications.remove(j);
-                    }
+                    users.get(i).friendRequestNotifications.remove(friendRequestNotification);
                     users.get(i).userFriends.add(userFriends.get(0));
                     break;
                 }

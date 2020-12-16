@@ -69,7 +69,7 @@ public class NewsServiceManager implements NewsService {
                             for (int k = 0; k < userService.getUsers().get(j).userPosts.size(); k++) {
                                 if (posts.get(i).id == userService.getUsers().get(j).userPosts.get(k).id)
                                 {
-                                    userService.getUsers().get(j).userPosts.set(i,post);
+                                    userService.getUsers().get(j).userPosts.set(k,post);
                                 }
                             }
                     break;

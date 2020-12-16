@@ -1,0 +1,690 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Api Documentation</title>
+    <style type="text/css">
+        body {
+            font-family: Trebuchet MS, sans-serif;
+            font-size: 15px;
+            color: #444;
+            margin-right: 24px;
+        }
+
+        h1	{
+            font-size: 25px;
+        }
+        h2	{
+            font-size: 20px;
+        }
+        h3	{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        hr	{
+            height: 1px;
+            border: 0;
+            color: #ddd;
+            background-color: #ddd;
+        }
+
+        .app-desc {
+            clear: both;
+            margin-left: 20px;
+        }
+        .param-name {
+            width: 100%;
+        }
+        .license-info {
+            margin-left: 20px;
+        }
+
+        .license-url {
+            margin-left: 20px;
+        }
+
+        .model {
+            margin: 0 0 0px 20px;
+        }
+
+        .method {
+            margin-left: 20px;
+        }
+
+        .method-notes	{
+            margin: 10px 0 20px 0;
+            font-size: 90%;
+            color: #555;
+        }
+
+        pre {
+            padding: 10px;
+            margin-bottom: 2px;
+        }
+
+        .http-method {
+            text-transform: uppercase;
+        }
+
+        pre.get {
+            background-color: #0f6ab4;
+        }
+
+        pre.post {
+            background-color: #10a54a;
+        }
+
+        pre.delete {
+            background-color: #a41e22;
+        }
+        pre.patch {
+            background-color: #ffd46b;
+        }
+
+        .huge	{
+            color: #fff;
+        }
+
+        pre.example {
+            background-color: #f3f3f3;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        code {
+            white-space: pre;
+        }
+
+        .nickname {
+            font-weight: bold;
+        }
+
+        .method-path {
+            font-size: 1.5em;
+            background-color: #0f6ab4;
+        }
+
+        .up {
+            float:right;
+        }
+
+        .parameter {
+            width: 500px;
+        }
+
+        .param {
+            width: 500px;
+            padding: 10px 0 0 20px;
+            font-weight: bold;
+        }
+
+        .param-desc {
+            width: 700px;
+            padding: 0 0 0 20px;
+            color: #777;
+        }
+
+        .param-type {
+            font-style: italic;
+        }
+
+        .param-enum-header {
+            width: 700px;
+            padding: 0 0 0 60px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .param-enum {
+            width: 700px;
+            padding: 0 0 0 80px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .field-label {
+            padding: 0;
+            margin: 0;
+            clear: both;
+        }
+
+        .field-items	{
+            padding: 0 0 15px 0;
+            margin-bottom: 15px;
+        }
+
+        .return-type {
+            clear: both;
+            padding-bottom: 10px;
+        }
+
+        .param-header {
+            font-weight: bold;
+        }
+
+        .method-tags {
+            text-align: right;
+        }
+
+        .method-tag {
+            background: none repeat scroll 0% 0% #24A600;
+            border-radius: 3px;
+            padding: 2px 10px;
+            margin: 2px;
+            color: #FFF;
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
+
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div>
+    <h1>Feedle Web API</h1>
+
+    <h3>Table of Contents </h3>
+    <div></div>
+
+    <h4><a href="#0.1_NewsController">NewsController</a></h4>
+    <ul>
+        <li><a href="#0.1_GetPosts"><code><span class="http-method">get</span> /feedle/posts</code></a></li>
+        <li><a href="#0.1_GetPostsForUser"><code><span class="http-method">get</span> /feedle/posts/authorized?{id}</code></a></li>
+        <li><a href="#0.1_CreatePost"><code><span class="http-method">post</span> /feedle/posts</code></a></li>
+        <li><a href="#0.1_AddComment"><code><span class="http-method">post</span> /feedle/posts/comment</code></a></li>
+        <li><a href="#0.1_DeletePostById"><code><span class="http-method">delete</span> /feedle/posts?{id}</code></a></li>
+        <li><a href="#0.1_DeleteComment"><code><span class="http-method">delete</span> /feedle/posts/comment?{commentId, postId}</code></a></li>
+        <li><a href="#0.1_UpdatePost"><code><span class="http-method">patch</span> /feedle/posts</code></a></li>
+    </ul>
+    <h4><a href="#0.2_UserController">UserController</a></h4>
+    <ul>
+        <li><a href="#0.2_authorizeUser"><code><span class="http-method">get</span> /feedle/user?{username,password}</code></a></li>
+        <li><a href="#0.2_getUserInformation"><code><span class="http-method">get</span> /feedle/user/userinfo?{id}</code></a></li>
+        <li><a href="#0.2_registerUser"><code><span class="http-method">post</span> /feedle/user</code></a></li>
+        <li><a href="#0.2_DeleteUser"><code><span class="http-method">delete</span> /feedle/user?{id}</code></a></li>
+        <li><a href="#0.2_UpdateUser"><code><span class="http-method">patch</span> /feedle/user</code></a></li>
+        <li><a href="#0.2_saveMessage"><code><span class="http-method">post</span> /feedle/sendMessage</code></a></li>
+        <li><a href="#0.2_getMessage"><code><span class="http-method">get</span> /feedle/getMessages?{lastMessageId, UserId}</code></a></li>
+        <li><a href="#0.2_subscribeToUser"><code><span class="http-method">patch</span> /feedle/user/subscribe</code></a></li>
+        <li><a href="#0.2_respondToFriendNotification"><code><span class="http-method">patch</span> /feedle/user/respondToFriendNotification?{status}</code></a></li>
+        <li><a href="#0.2_makeFriendRequestNotification"><code><span class="http-method">post</span> /feedle/user/makeFriendRequest</code></a></li>
+        <li><a href="#0.2_unsubscribeFromUser"><code><span class="http-method">delete</span> /feedle/user/unsubscribe?{userId, subscriptionId}</code></a></li>
+        <li><a href="#0.2_addConversation"><code><span class="http-method">post</span> /feedle/user/conversation?{creatorId, withWhomId}</code></a></li>
+        <li><a href="#0.2_getFriendNotifications"><code><span class="http-method">get</span> /feedle/user/getFriendNotifications?{lastNotificationId, userId}</code></a></li>
+    </ul>
+
+    <hr>
+    <h1><a name="0.1_NewsController">NewsController</a></h1>
+    <div><a name="0.1_GetPosts"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feedle/posts</code></pre>
+        </div>
+        <div class="method-summary">GetPosts (<span></span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+
+    </div>
+    <hr>
+    <div><a name="0.1_GetPostsForUser"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feelde/posts/authorized?{id}</code></pre>
+        </div>
+        <div class="method-summary">GetPostsForUser (<span> id</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+
+    </div>
+
+    <hr>
+    <div><a name="0.1_CreatePost"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/posts</code></pre>
+        </div>
+        <div class="method-summary">CreatePost (<span> post</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_AddComment"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/posts/comment?{id}</code></pre>
+        </div>
+        <div class="method-summary">AddComment (<span>id, comment</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_DeletePostById"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/posts?{id}</code></pre>
+        </div>
+        <div class="method-summary">DeletePostById (<span> id</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_DeleteComment"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/posts/comment?{commentId, postId}</code></pre>
+        </div>
+        <div class="method-summary">DeleteComment (<span> commentId, postId</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_UpdatePost"></a>
+        <div class="method-path">
+            <pre class="patch"><code class="huge"><span>PATCH</span> feedle/posts</code></pre>
+        </div>
+        <div>UpdatePost (<span>Post post</span>)</div>
+        <div class="method-summary"></div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+
+    <h1><a name="0.2_UserController">UserController</a></h1>
+
+    <div><a name="0.2_authorizeUser"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feedle/user?{username,password}</code></pre>
+        </div>
+        <div class="method-summary">authorizeUser (<span>username, password</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_getUserInformation"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feedle/userinfo?{id}</code></pre>
+        </div>
+        <div class="method-summary">getUserInformation (<span>id</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_registerUser"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/user</code></pre>
+        </div>
+        <div class="method-summary">registerUser (<span>User</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_DeleteUser"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/user?{id}</code></pre>
+        </div>
+        <div class="method-summary">DeleteUser (<span>id</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_UpdateUser"></a>
+        <div class="method-path">
+            <pre class="patch"><code class="huge"><span>PATCH</span> feedle/user</code></pre>
+        </div>
+        <div class="method-summary">UpdateUser (<span>user</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_saveMessage"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/sendMessage</code></pre>
+        </div>
+        <div class="method-summary">saveMessage (<span></span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_getMessage"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feedle/getMessages?{lastMessageId, userId}</code></pre>
+        </div>
+        <div class="method-summary">getMessage (<span>lastMessageId, userId</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_subscribeToUser"></a>
+        <div class="method-path">
+            <pre class="patch"><code class="huge"><span>PATCH</span> feedle/user/subscribe</code></pre>
+        </div>
+        <div class="method-summary">subscribeToUser (<span>userSubscription</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_respondToFriendNotification"></a>
+        <div class="method-path">
+            <pre class="patch"><code class="huge"><span>PATCH</span> feedle/user/respondToFriendNotification?{status}</code></pre>
+        </div>
+        <div class="method-summary">respondToFriendNotification (<span>status, friendRequestNotification</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_makeFriendRequestNotification"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/user/makeFriendRequest}</code></pre>
+        </div>
+        <div class="method-summary">makeFriendRequestNotification (<span>friendRequestNotification</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_unsubscribeFromUser"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/user/unsubscribe?{userId, subscriptionId}</code></pre>
+        </div>
+        <div class="method-summary">unsubscribeFromUser (<span>userId, subscriptionId</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_addConversation"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/user/conversation?{creatorId, withWhomId}</code></pre>
+        </div>
+        <div class="method-summary">addConversation (<span>creatorId, withWhomId, conversation</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.2_getFriendNotifications"></a>
+        <div class="method-path">
+            <pre class="get"><code class="huge"><span>GET</span> feedle/getFriendNotifications?{lastNotificationId, userId}</code></pre>
+        </div>
+        <div class="method-summary">getFriendNotifications (<span>lastNotificationId, userId</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+
+
+
+</div>
+</body>
+</html>

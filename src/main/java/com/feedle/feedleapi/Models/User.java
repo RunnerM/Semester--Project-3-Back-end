@@ -51,4 +51,5 @@ public class User implements Serializable {
      **/
     public int securityLevel;
     public ArrayList<UserInformation> subscriptionUsersInformation;
+    public String userImageSrc;
 }

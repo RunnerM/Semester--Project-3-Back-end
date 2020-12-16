@@ -43,11 +43,11 @@ public class NewsServiceManager implements NewsService {
         if (newId != -1) {
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).id == newId) {
-                    for (int j = 0; j< userService.getUser().size(); j++)
+                    for (int j = 0; j< userService.getUsers().size(); j++)
                     {
-                        if (userService.getUser().get(j).id == posts.get(i).userId)
+                        if (userService.getUsers().get(j).id == posts.get(i).userId)
                         {
-                            userService.getUser().get(j).userPosts.remove(posts.get(i));
+                            userService.getUsers().get(j).userPosts.remove(posts.get(i));
                         }
                     }
                     posts.remove(i);
@@ -64,10 +64,19 @@ public class NewsServiceManager implements NewsService {
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).id == postForUpdate.id) {
                     posts.set(i, postForUpdate);
+                    for (int j =0; j<userService.getUsers().size(); j++)
+                        if (userService.getUsers().get(j).id == posts.get(i).userId)
+                            for (int k = 0; k < userService.getUsers().get(j).userPosts.size(); k++) {
+                                if (posts.get(i).id == userService.getUsers().get(j).userPosts.get(k).id)
+                                {
+                                    userService.getUsers().get(j).userPosts.set(i,post);
+                                }
+                            }
                     break;
                 }
             }
-        } else System.out.println("BadPostForUpdateGiven");
+        }
+        else System.out.println("BadPostForUpdateGiven");
     }
 
     @Override

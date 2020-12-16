@@ -58,5 +58,6 @@ public class Post {
     public ArrayList<Comment> comments ;
     public int approvals;
     public int disapprovals;
+    public String postImageSrc;
 
 }

@@ -57,7 +57,7 @@ public class UserServiceManager implements UserService {
     }
 
     @Override
-    public List<User> getUser() {
+    public List<User> getUsers() {
         return this.users;
     }
 
@@ -84,6 +84,7 @@ public class UserServiceManager implements UserService {
                 userInformation.userName = users.get(i).username;
                 userInformation.userFriends = users.get(i).userFriends;
                 userInformation.userSubscriptions = users.get(i).userSubscriptions;
+                userInformation.userImageSrc = users.get(i).userImageSrc;
                 return userInformation;
             }
         }

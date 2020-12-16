@@ -7,4 +7,5 @@ public class UserInformation {
     public String userName;
     public List<UserFriend> userFriends;
     public List<UserSubscription> userSubscriptions;
+    public String userImageSrc;
 }

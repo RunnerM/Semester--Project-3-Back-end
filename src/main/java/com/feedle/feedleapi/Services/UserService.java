@@ -12,7 +12,7 @@ public interface UserService {
 
     void deleteUser(int id);
 
-    List<User> getUser();
+    List<User> getUsers();
 
     User updateUser(User user);
 

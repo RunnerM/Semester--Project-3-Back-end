@@ -34,7 +34,7 @@ public interface UserService {
 
     Boolean makeFriendRequest(FriendRequestNotification friendRequestNotification);
 
-    UserConversation addConversation (Conversation conversation, int creatorId, int withWhomId);
+    Boolean addConversation (Conversation conversation, int creatorId, int withWhomId);
 
     Boolean responseToFriendRequest(FriendRequestNotification friendRequestNotification, boolean status);
 

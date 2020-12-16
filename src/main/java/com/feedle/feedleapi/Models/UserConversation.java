@@ -17,10 +17,11 @@ import lombok.Data;
 public class UserConversation {
     public int userId;
     public int conversationId;
-    public User user;
     public Conversation conversation;
     public int withWhomUserId;
 
+
+    @JsonIgnore
     public int getLastMessageId()
     {
         int max = -1;

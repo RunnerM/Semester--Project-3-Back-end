@@ -219,7 +219,9 @@ public class    NetworkServiceManager implements NetworkService {
             send(out,requestAsJson);
             System.out.println("AddConversation");
             String response = read(in);
+            System.out.println(response);
             AddConversationResponse addConversationResponse = gson.fromJson(parseJson(response),AddConversationResponse.class);
+            System.out.println(addConversationResponse.getUserConversations().get(0).conversation.messages.size());
             return addConversationResponse.getUserConversations();
         }
         catch (Exception e)

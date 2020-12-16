@@ -1,5 +1,6 @@
 package com.feedle.feedleapi.Networking;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.feedle.feedleapi.Models.UserFriend;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class RespondToFriendResponse extends Request {
         this.userFriends = userFriends;
     }
 
+    @JsonIgnore
     public ArrayList<UserFriend> getUserFriends() {
         return userFriends;
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 @Service
 public class UserServiceManager implements UserService {
@@ -167,7 +168,7 @@ public class UserServiceManager implements UserService {
     }
 
     @Override
-    public UserConversation addConversation(Conversation conversation, int creatorId, int withWhomId) {
+    public Boolean addConversation(Conversation conversation, int creatorId, int withWhomId) {
         List<UserConversation> userConversations = networkService.addConversation(conversation, creatorId, withWhomId);
         User user = null;
         User otherUser = null;
@@ -186,9 +187,9 @@ public class UserServiceManager implements UserService {
         if (user != null && otherUser != null) {
             user.userConversations.add(userConversations.get(0));
             otherUser.userConversations.add(userConversations.get(1));
-            return userConversations.get(0);
+            return true;
         }
-        return null;
+        return false;
     }
 
     @Override

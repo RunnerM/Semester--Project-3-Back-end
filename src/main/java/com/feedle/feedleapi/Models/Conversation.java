@@ -1,5 +1,6 @@
 package com.feedle.feedleapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -24,10 +25,7 @@ public class Conversation {
      * Stores the Messages in the Conversation.
      * */
     public ArrayList<Message> messages ;
-    /**
-     * Stores the Connections between the Users and Conversation.
-     * */
-    public ArrayList<UserConversation> userConversations ;
+
 
 
 }

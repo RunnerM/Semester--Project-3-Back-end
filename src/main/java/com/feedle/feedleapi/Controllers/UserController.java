@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @PostMapping("user/conversation")
-    public UserConversation addConversation(@RequestParam int creatorId, @RequestParam int withWhomId, @RequestBody Conversation conversation)
+    public Boolean addConversation(@RequestParam int creatorId, @RequestParam int withWhomId, @RequestBody Conversation conversation)
     {
         return this.userService.addConversation(conversation,creatorId, withWhomId);
     }

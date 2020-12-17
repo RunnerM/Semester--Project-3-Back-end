@@ -27,29 +27,6 @@
             background-color: #ddd;
         }
 
-        .app-desc {
-            clear: both;
-            margin-left: 20px;
-        }
-        .param-name {
-            width: 100%;
-        }
-        .license-info {
-            margin-left: 20px;
-        }
-
-        .license-url {
-            margin-left: 20px;
-        }
-
-        .model {
-            margin: 0 0 0px 20px;
-        }
-
-        .method {
-            margin-left: 20px;
-        }
-
         .method-notes	{
             margin: 10px 0 20px 0;
             font-size: 90%;
@@ -103,9 +80,7 @@
             background-color: #0f6ab4;
         }
 
-        .up {
-            float:right;
-        }
+
 
         .parameter {
             width: 500px;
@@ -195,6 +170,9 @@
         <li><a href="#0.1_DeletePostById"><code><span class="http-method">delete</span> /feedle/posts?{id}</code></a></li>
         <li><a href="#0.1_DeleteComment"><code><span class="http-method">delete</span> /feedle/posts/comment?{commentId, postId}</code></a></li>
         <li><a href="#0.1_UpdatePost"><code><span class="http-method">patch</span> /feedle/posts</code></a></li>
+        <li><a href="#0.1_MakeReaction"><code><span class="http-method">post</span> /feedle/posts/reaction</code></a></li>
+        <li><a href="#0.1_DeletePostReaction"><code><span class="http-method">delete</span> /feedle/posts/reaction?{postReactionId}</code></a></li>
+        <li><a href="#0.1_UpdatePostReaction"><code><span class="http-method">patch</span> /feedle/posts/reaction</code></a></li>
     </ul>
     <h4><a href="#0.2_UserController">UserController</a></h4>
     <ul>
@@ -211,6 +189,7 @@
         <li><a href="#0.2_unsubscribeFromUser"><code><span class="http-method">delete</span> /feedle/user/unsubscribe?{userId, subscriptionId}</code></a></li>
         <li><a href="#0.2_addConversation"><code><span class="http-method">post</span> /feedle/user/conversation?{creatorId, withWhomId}</code></a></li>
         <li><a href="#0.2_getFriendNotifications"><code><span class="http-method">get</span> /feedle/user/getFriendNotifications?{lastNotificationId, userId}</code></a></li>
+        <li><a href="#0.2_deleteFriend"><code><span class="http-method">delete</span> /feedle/deleteFriend?{userFriendId}</code></a></li>
     </ul>
 
     <hr>
@@ -243,7 +222,7 @@
         <div class="method-path">
             <pre class="get"><code class="huge"><span>GET</span> feelde/posts/authorized?{id}</code></pre>
         </div>
-        <div class="method-summary">GetPostsForUser (<span> id</span>)</div>
+        <div class="method-summary">GetPostsForUser (<span>id</span>)</div>
         <div class="method-notes"></div>
 
         <h3>Responses</h3>
@@ -361,6 +340,79 @@
             <pre class="patch"><code class="huge"><span>PATCH</span> feedle/posts</code></pre>
         </div>
         <div>UpdatePost (<span>Post post</span>)</div>
+        <div class="method-summary"></div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_MakeReaction"></a>
+        <div class="method-path">
+            <pre class="post"><code class="huge"><span>POST</span> feedle/posts/recation</code></pre>
+        </div>
+        <div>MakeReaction(<span>postReaction</span>)</div>
+        <div class="method-summary"></div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+
+    <div><a name="0.1_DeletePostReaction"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/posts/reaction?{postReactionId}</code></pre>
+        </div>
+        <div>DeletePostReaction(<span>postReactionId</span>)</div>
+        <div class="method-summary"></div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
+    <div><a name="0.1_UpdatePostReaction"></a>
+        <div class="method-path">
+            <pre class="patch"><code class="huge"><span>PATCH</span> feedle/posts/reaction</code></pre>
+        </div>
+        <div>UpdatePostReaction(<span>postReaction</span>)</div>
         <div class="method-summary"></div>
         <div class="method-notes"></div>
 
@@ -683,6 +735,29 @@
     </div>
     <hr>
 
+    <div><a name="0.2_deleteFriend"></a>
+        <div class="method-path">
+            <pre class="delete"><code class="huge"><span>DELETE</span> feedle/deleteFriend?{userFriendId}</code></pre>
+        </div>
+        <div class="method-summary">deleteFriend (<span>userFriendId</span>)</div>
+        <div class="method-notes"></div>
+
+        <h3>Responses</h3>
+        <h4>200</h4>
+        OK
+        <a href="#0.1_"></a>
+        <h4>401</h4>
+        Unauthorized
+        <a href="#0.1_"></a>
+        <h4>403</h4>
+        Forbidden
+        <a href="#0.1_"></a>
+        <h4>404</h4>
+        Not Found
+        <a href="#0.1_"></a>
+
+    </div>
+    <hr>
 
 
 </div>

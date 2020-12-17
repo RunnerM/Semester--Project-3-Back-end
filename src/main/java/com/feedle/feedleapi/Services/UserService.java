@@ -4,9 +4,10 @@ import com.feedle.feedleapi.Models.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 public interface UserService {
-    void registerUser(User user);
+    Boolean registerUser(User user);
 
     User authorizeUser(String username, String password);
 
@@ -18,7 +19,7 @@ public interface UserService {
 
     UserInformation getUserInformationById(int id);
 
-    UserConversation sendMessage(Message message);
+    Boolean sendMessage(Message message);
 
     List<UserConversation> getUserConversationsByUserId (int id);
 

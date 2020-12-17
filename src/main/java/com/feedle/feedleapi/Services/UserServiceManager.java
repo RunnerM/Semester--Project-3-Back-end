@@ -23,11 +23,16 @@ public class UserServiceManager implements UserService {
     }
 
     @Override
-    public void registerUser(User user) {
+    public Boolean registerUser(User user) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).username.equals(user.username))
+                return false;
+        }
         User newUser = networkService.addUser(user);
         if (newUser != null) {
             this.users.add(newUser);
-        } else System.out.println("BadUser");
+            return true;
+        } else return false;
     }
 
     @Override
@@ -93,20 +98,17 @@ public class UserServiceManager implements UserService {
     }
 
     @Override
-    public UserConversation sendMessage(Message message) {
+    public Boolean sendMessage(Message message) {
         Message messageResponse = networkService.sendMessage(message);
-        for (int i = 0; i < users.size(); i++) {
-            if (messageResponse.UserId == users.get(i).id) {
-                for (int j = 0; j < users.get(i).userConversations.size(); i++) {
-                    if (users.get(i).userConversations.get(j).conversationId == messageResponse.conversationId) {
-                        users.get(i).userConversations.get(j).conversation.messages.add(messageResponse);
-                        return users.get(i).userConversations.get(j);
-                    }
+        for (int i = 0; i < users.size(); i++)
+            for (int j = 0; j < users.get(i).userConversations.size(); j++) {
+                if (messageResponse.conversationId == users.get(i).userConversations.get(j).conversationId) {
+                    users.get(i).userConversations.get(j).conversation.messages.add(message);
                 }
             }
-        }
-        return null;
+        return true;
     }
+
 
     @Override
     public List<UserConversation> getUserConversationsByUserId(int id) {

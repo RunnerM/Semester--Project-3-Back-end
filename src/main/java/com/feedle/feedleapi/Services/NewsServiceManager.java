@@ -3,6 +3,7 @@ package com.feedle.feedleapi.Services;
 import com.feedle.feedleapi.Models.Comment;
 import com.feedle.feedleapi.Models.Post;
 import com.feedle.feedleapi.Models.PostReaction;
+import com.feedle.feedleapi.Models.UserInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -132,12 +133,22 @@ public class NewsServiceManager implements NewsService {
     }
 
     @Override
+    public Post getPostById(int postId) {
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).id == postId)
+                return  posts.get(i);
+        }
+        return null;
+    }
+
+    @Override
     public boolean makePostReaction(PostReaction postReaction) {
         PostReaction postReactionToMake = networkService.makePostReaction(postReaction);
         for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).id == postReactionToMake.postId)
+            if (posts.get(i).id == postReactionToMake.postId) {
                 posts.get(i).postReactions.add(postReactionToMake);
                 return true;
+            }
         }
         return false;
     }
@@ -154,5 +165,21 @@ public class NewsServiceManager implements NewsService {
                 }
         }
         return false;
+    }
+
+    @Override
+    public List<Post> getPostForUser(int userId) {
+        List<Post> postsResult = new ArrayList<>();
+        UserInformation userInfo = userService.getUserInformationById(userId);
+        for (int i = 0; i < posts.size(); i++) {
+                for (int k = 0; k < userInfo.userSubscriptions.size(); k++) {
+                    if (userInfo.userSubscriptions.get(k).subscriptionId == posts.get(i).userId) {
+                        if (!postsResult.contains(posts.get(i)) && postsResult.size() < 25)
+                            postsResult.add(posts.get(i));
+                        break;
+                    }
+                }
+            }
+        return postsResult;
     }
 }

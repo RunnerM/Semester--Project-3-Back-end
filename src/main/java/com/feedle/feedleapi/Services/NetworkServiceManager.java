@@ -303,6 +303,80 @@ public class    NetworkServiceManager implements NetworkService {
         return -1;
     }
 
+    @Override
+    public int deleteFriend(int friendUserId) {
+        try {
+            DeleteFriendRequest deleteFriendRequest = new DeleteFriendRequest(friendUserId);
+            String requestAsJson = gson.toJson(deleteFriendRequest);
+            send(out,requestAsJson);
+            System.out.println("DeleteFriend");
+            String response = read(in);
+            DeleteFriendRequest deleteFriendResponse = gson.fromJson(parseJson(response),DeleteFriendRequest.class);
+            return deleteFriendResponse.getUserFriendId();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
+    public int deletePostReaction(int postReactionId) {
+        try {
+            DeleteReactionRequest
+                    deleteReactionRequest = new DeleteReactionRequest(postReactionId);
+            String requestAsJson = gson.toJson(deleteReactionRequest);
+            send(out,requestAsJson);
+            System.out.println("DeletePostReaction");
+            String response = read(in);
+            DeleteReactionRequest deleteReactionResponse = gson.fromJson(parseJson(response),DeleteReactionRequest.class);
+            return deleteReactionResponse.getPostReactionId();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
+    public PostReaction makePostReaction(PostReaction postReaction) {
+        try {
+            MakeReactionRequest
+                    makeReactionRequest = new MakeReactionRequest(postReaction);
+            String requestAsJson = gson.toJson(makeReactionRequest);
+            send(out,requestAsJson);
+            System.out.println("MakePostReaction");
+            String response = read(in);
+            MakeReactionRequest makeReactionResponse = gson.fromJson(parseJson(response),MakeReactionRequest.class);
+            return makeReactionResponse.getPostReaction();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public PostReaction updatePostReaction(PostReaction postReaction) {
+        try {
+            UpdateReactionRequest
+                    updateReactionRequest = new UpdateReactionRequest(postReaction);
+            String requestAsJson = gson.toJson(updateReactionRequest);
+            send(out,requestAsJson);
+            System.out.println("UpdatePostReaction");
+            String response = read(in);
+            UpdateReactionRequest updateReactionResponse = gson.fromJson(parseJson(response),UpdateReactionRequest.class);
+            return updateReactionResponse.getPostReaction();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private JsonReader parseJson(String json) {
         JsonReader reader = new JsonReader(new StringReader(json));

@@ -38,4 +38,12 @@ public interface NetworkService {
 
     List<UserConversation> addConversation(Conversation conversation,int creatorId, int withWhomId);
 
+    int deleteFriend (int friendUserId);
+
+    int deletePostReaction(int postReactionId);
+
+    PostReaction makePostReaction(PostReaction postReaction);
+
+    PostReaction updatePostReaction(PostReaction postReaction);
+
 }

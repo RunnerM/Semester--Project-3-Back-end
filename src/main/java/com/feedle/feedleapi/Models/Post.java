@@ -53,11 +53,8 @@ public class Post {
      * Represents the second of creation.
      */
     public int second;
-
-    //public byte[] images;
     public ArrayList<Comment> comments ;
-    public int approvals;
-    public int disapprovals;
+    public ArrayList<PostReaction> postReactions;
     public String postImageSrc;
 
 }

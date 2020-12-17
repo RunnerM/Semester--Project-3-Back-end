@@ -198,8 +198,7 @@ public class UserServiceManager implements UserService {
         if (userFriends != null) {
             for (int i = 0; i < users.size(); i++) {
                 if (users.get(i).id == friendRequestNotification.potentialFriendUserId) {
-                    for (int j = 0; j<users.get(j).friendRequestNotifications.size(); j++)
-                    {
+                    for (int j = 0; j < users.get(j).friendRequestNotifications.size(); j++) {
                         if (users.get(i).friendRequestNotifications.get(j).creatorId == friendRequestNotification.creatorId && users.get(i).friendRequestNotifications.get(j).userId == friendRequestNotification.potentialFriendUserId)
                             users.get(i).friendRequestNotifications.remove(j);
                     }
@@ -270,10 +269,36 @@ public class UserServiceManager implements UserService {
     @Override
     public void addPostForUser(int userId, Post post) {
         User user = getUserById(userId);
-        if (user.userPosts == null)
-        {
+        if (user.userPosts == null) {
             user.userPosts = new ArrayList<>();
         }
         user.userPosts.add(post);
+    }
+
+    @Override
+    public Boolean deleteFriend(int userFriendId) {
+        int userFriendIdToDelete = networkService.deleteFriend(userFriendId);
+        int friendIdToRemove = -1;
+        int userIdToRemove = -1;
+        for (int i = 0; i < this.users.size(); i++) {
+            for (int j = 0; j < users.get(i).userFriends.size(); j++) {
+                if (users.get(i).userFriends.get(j).userFriendId == userFriendIdToDelete) {
+                    UserFriend toRemove = users.get(i).userFriends.get(j);
+                    friendIdToRemove = toRemove.friendId;
+                    userIdToRemove = toRemove.userId;
+                    users.get(i).userFriends.remove(toRemove);
+                    break;
+                }
+            }
+        }
+        User user = this.getUserById(friendIdToRemove);
+        for (int i = 0; i < user.userFriends.size(); i++) {
+            if (user.userFriends.get(i).friendId == userIdToRemove) {
+                UserFriend toRemove = user.userFriends.get(i);
+                user.userFriends.remove(toRemove);
+                return true;
+            }
+        }
+        return false;
     }
 }

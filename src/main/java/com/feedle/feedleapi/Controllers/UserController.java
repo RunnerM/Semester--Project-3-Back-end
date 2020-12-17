@@ -65,7 +65,7 @@ public class UserController {
 
     @GetMapping("/getMessages")
     public ResponseEntity<List<UserConversation>> getMessage(@RequestParam int lastMessageId, @RequestParam int userId) throws InterruptedException {
-        if (userService.checkIfTheLastMessageIdIsEqualsToGivenId(userId, lastMessageId))
+        if (userService.checkIfTheLastMessageIdIsEqualsToGivenId(lastMessageId, userId))
             return ResponseEntity.ok(userService.getUserConversationsByUserId(userId));
         return keepPollingForMessages(lastMessageId, userId);
     }
@@ -106,6 +106,13 @@ public class UserController {
             return ResponseEntity.ok(userService.getFriendNotificationsForUser(userId));
         return keepPollingForNotifications(lastNotificationId,userId);
     }
+
+    @DeleteMapping("/deleteFriend")
+    public Boolean deleteFriend(@RequestParam int userFriendId)
+    {
+        return userService.deleteFriend(userFriendId);
+    }
+
 
     private ResponseEntity<List<UserConversation>> keepPollingForMessages(@RequestParam int lastMessageId, @RequestParam int userId) throws InterruptedException {
         Thread.sleep(5000);

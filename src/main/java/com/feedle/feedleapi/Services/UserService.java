@@ -40,6 +40,8 @@ public interface UserService {
 
     void addPostForUser(int userId, Post post);
 
+    Boolean deleteFriend(int userFriendId);
+
 
 
 }

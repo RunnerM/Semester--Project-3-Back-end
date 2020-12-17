@@ -2,6 +2,7 @@ package com.feedle.feedleapi.Services;
 
 import com.feedle.feedleapi.Models.Comment;
 import com.feedle.feedleapi.Models.Post;
+import com.feedle.feedleapi.Models.PostReaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,6 +115,44 @@ public class NewsServiceManager implements NewsService {
             }
         }
         return false;
+    }
 
+    @Override
+    public boolean updatePostReaction(PostReaction postReaction) {
+        PostReaction postReactionToUpdate = networkService.updatePostReaction(postReaction);
+        for (int i = 0; i < posts.size(); i++) {
+            for (int j = 0; j < posts.get(i).postReactions.size(); j++) {
+                if (posts.get(i).postReactions.get(j).postReactionId == postReactionToUpdate.postReactionId) {
+                    posts.get(i).postReactions.set(j, postReactionToUpdate);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean makePostReaction(PostReaction postReaction) {
+        PostReaction postReactionToMake = networkService.makePostReaction(postReaction);
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).id == postReactionToMake.postId)
+                posts.get(i).postReactions.add(postReactionToMake);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deletePostReaction(int postReactionId) {
+        int postReactionIdToDelete = networkService.deletePostReaction(postReactionId);
+        for (int i = 0; i < posts.size(); i++)
+            for (int j = 0; j < posts.get(i).postReactions.size(); j++) {
+                if (posts.get(i).postReactions.get(j).postReactionId == postReactionIdToDelete) {
+                    PostReaction toRemove = posts.get(i).postReactions.get(j);
+                    posts.get(i).postReactions.remove(toRemove);
+                    return true;
+                }
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.feedle.feedleapi.Controllers;
 
 import com.feedle.feedleapi.Models.Comment;
 import com.feedle.feedleapi.Models.Post;
+import com.feedle.feedleapi.Models.PostReaction;
 import com.feedle.feedleapi.Services.NewsService;
 import com.feedle.feedleapi.Services.NewsServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,23 @@ public class NewsController {
     boolean DeleteComment(@RequestParam int commentId, @RequestParam int postId)
     {
        return newsService.deleteComment(commentId,postId);
+    }
+
+    @PostMapping("posts/reaction")
+    boolean MakeReaction(@RequestBody PostReaction postReaction)
+    {
+        return newsService.makePostReaction(postReaction);
+    }
+
+    @DeleteMapping("posts/reaction")
+    boolean DeletePostReaction(@RequestParam int postReactionId)
+    {
+        return newsService.deletePostReaction(postReactionId);
+    }
+
+    @PatchMapping("posts/reaction")
+    boolean UpdatePostReaction(@RequestBody PostReaction postReaction)
+    {
+        return newsService.updatePostReaction(postReaction);
     }
 }

@@ -19,7 +19,6 @@ public class UserServiceManager implements UserService {
     public UserServiceManager(NetworkService networkService) {
         this.networkService = networkService;
         users = networkService.getAllUser();
-        System.out.println("in the system there is amount of users : " + users.size());
     }
 
     @Override

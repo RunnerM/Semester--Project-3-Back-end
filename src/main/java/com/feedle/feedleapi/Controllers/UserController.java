@@ -42,8 +42,12 @@ public class UserController {
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.OK)
-    public void registerUser(@RequestBody User user) {
-        userService.registerUser(user);
+    public boolean registerUser(@RequestBody User user) {
+        boolean Result = userService.registerUser(user);
+        if (Result)
+          return true;
+        else
+            return false;
     }
 
     @DeleteMapping("/user")
@@ -58,9 +62,9 @@ public class UserController {
     }
 
     @PostMapping("/sendMessage")
-    public ResponseEntity<UserConversation> saveMessage(@RequestBody Message message) {
-        UserConversation userConversation = userService.sendMessage(message);
-        return ResponseEntity.ok(userConversation);
+    public ResponseEntity<Boolean> saveMessage(@RequestBody Message message) {
+        Boolean toChangeUserConversation = userService.sendMessage(message);
+        return ResponseEntity.ok(toChangeUserConversation);
     }
 
     @GetMapping("/getMessages")

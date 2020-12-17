@@ -28,7 +28,8 @@ public class NewsController {
     }
 
     @GetMapping("/posts/authorized")
-    List<Post> GetPostsForUser(@RequestParam int id) {return  newsService.getAllPost();}
+    List<Post> GetPostsForUser(@RequestParam int id) {
+        ;return  newsService.getPostForUser(id);}
 
 
     @PostMapping("/posts")
@@ -75,5 +76,12 @@ public class NewsController {
     boolean UpdatePostReaction(@RequestBody PostReaction postReaction)
     {
         return newsService.updatePostReaction(postReaction);
+    }
+
+    @GetMapping("postsById")
+    Post getPostById(@RequestParam int postId)
+    {
+        System.out.println(postId);
+        return newsService.getPostById(postId);
     }
 }

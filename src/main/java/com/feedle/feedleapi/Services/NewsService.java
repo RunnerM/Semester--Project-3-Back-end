@@ -26,6 +26,10 @@ public interface NewsService {
 
     boolean makePostReaction(PostReaction postReaction);
 
+    Post getPostById(int postId);
+
+    List<Post> getPostForUser(int userId);
+
 
 
 }
